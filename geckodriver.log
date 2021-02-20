@@ -1294,3 +1294,150 @@ Gdk-Message: 11:13:12.670: firefox: Fatal IO error 11 (Resource temporarily unav
 Exiting due to channel error.
 Exiting due to channel error.
 Exiting due to channel error.
+1613751081818	geckodriver	INFO	Listening on 127.0.0.1:54913
+1613751082521	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilebbE6fj"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613751089724	Marionette	INFO	Listening on port 33443
+1613751089865	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613751089909	Marionette	ERROR	[15] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1613760080272	Marionette	INFO	Stopped listening on port 33443
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 987: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x1F0011,name=PBackgroundStorage::Msg_Observe) Channel error: cannot send/recv
+
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x1F0011,name=PBackgroundStorage::Msg_Observe) Channel error: cannot send/recv
+
+1613760535700	geckodriver	INFO	Listening on 127.0.0.1:49703
+1613760535706	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileT3efWf"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613760542068	Marionette	INFO	Listening on port 44471
+1613760542145	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613760542157	Marionette	ERROR	[15] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+1613760590014	Marionette	INFO	Stopped listening on port 44471
+1613760592698	geckodriver	INFO	Listening on 127.0.0.1:58609
+1613760593702	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile5keyN0"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613760598996	Marionette	INFO	Listening on port 43639
+1613760599048	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613760599065	Marionette	ERROR	[15] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+1613760708283	Marionette	INFO	Stopped listening on port 43639
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 987: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1613760712281	geckodriver	INFO	Listening on 127.0.0.1:49473
+1613760713285	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilejNAhw4"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613760718919	Marionette	INFO	Listening on port 35421
+1613760719036	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613760719056	Marionette	ERROR	[15] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+1613760775069	geckodriver	INFO	Listening on 127.0.0.1:58771
+1613760776073	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilengjCLj"
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 987: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613760780341	Marionette	INFO	Stopped listening on port 35421
+1613760782239	Marionette	INFO	Listening on port 35795
+1613760782331	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613760782349	Marionette	ERROR	[18] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 987: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1613760796928	Marionette	INFO	Stopped listening on port 35795
+1613760812907	geckodriver	INFO	Listening on 127.0.0.1:39603
+1613760812913	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilet5SVum"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613760819605	Marionette	INFO	Listening on port 36127
+1613760819661	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613760819676	Marionette	ERROR	[18] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1613761683437	geckodriver	INFO	Listening on 127.0.0.1:37075
+1613761684444	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilekNCf4i"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 987: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1613761690529	Marionette	INFO	Listening on port 40597
+1613761690601	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613761690624	Marionette	ERROR	[18] No reply from Marionette:Register
+1613761691739	Marionette	INFO	Stopped listening on port 36127
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 987: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1613761744502	Marionette	INFO	Stopped listening on port 40597
+1613761745611	geckodriver	INFO	Listening on 127.0.0.1:41415
+1613761746616	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileyqJ05C"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1613761753342	Marionette	INFO	Listening on port 37559
+1613761753475	Marionette	WARN	TLS certificate errors will be ignored for this session
+1613761753508	Marionette	ERROR	[15] No reply from Marionette:Register
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+Gdk-Message: 15:54:51.745: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :1.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
