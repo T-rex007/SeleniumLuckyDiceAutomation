@@ -3,7 +3,6 @@ Author: Tyrel Cadogan
 Email: shaqc777@yahoo.com
 Github:  
 Decription: 
-
 """
 import time
 from selenium import webdriver
@@ -13,9 +12,7 @@ import base64
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+import pytesseract
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -74,7 +71,83 @@ def clickScreen(driver, top_left):
         action.move_to_element_with_offset(myElem, top_left[0] + 50, top_left[1] + 50)
         action.click()
         action.perform()
-        print("Action Performed!")
+        #print("Action Performed!")
     except TimeoutException:
         print("Loading took too much time!")
+
+def decodeString(input_string):
+    num_dict = {'One': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5,'Six': 6}
+    for key,value in num_dict.items():
+        if(key == input_string):
+            return value
+    return 0
+
+
+# get grayscale image
+def get_grayscale(image):
+    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# noise removal
+def remove_noise(image):
+    return cv2.medianBlur(image,5)
+ 
+#thresholding
+def thresholding(image):
+    return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+
+#dilation
+def dilate(image):
+    kernel = np.ones((2,2),np.uint8)
+    return cv2.dilate(image, kernel, iterations = 1)
+    
+#erosion
+def erode(image):
+    kernel = np.ones((5,5),np.uint8)
+    return cv2.erode(image, kernel, iterations = 1)
+
+#opening - erosion followed by dilation
+def opening(image):
+    kernel = np.ones((5,5),np.uint8)
+    return cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
+
+#canny edge detection
+def canny(image):
+    return cv2.Canny(image, 100, 200)
+
+def cropRegion(r, img):
+    return img[int(r[1]):int(r[1]+r[3]), int(r[0]):int(r[0]+r[2])]
+
+
+def colorThreshold(img, rbg_threshold = (60,60,60)):
+    """
+    Return Binary Image which is thresholded by thr rbg pixel vales 
+    given in rbg_threshold i.e. If pixel is > thres assign 1
+    and if pixel is < thres assing 0
+    args:
+          img - img to be thresholded
+          rbg_threshold - (r,g,b)
+    """
+    temp = np.zeros(img.shape)
+    rflags_h = img[:,:]>rbg_threshold[0]
+
+    temp[:,:][rflags_h] = 1
+    
+    return temp
+
+def retrieveAmount(driver, game_image):
+    """
+    Return current Amount (int) the player currently has.
+    args: Created Selenium webdriver
+    """
+    bal_region = (987, 653, 272, 63)
+    game_img = getGameImage(driver, "layer2")
+    # Crop image
+    imCrop = game_image[int(bal_region[1]):int(bal_region[1]+bal_region[3]), 
+                        int(bal_region[0]):int(bal_region[0]+bal_region[2])]
+    im1 = colorThreshold(imCrop)
+    img1 = np.abs(im1.astype( int) - 255)
+    img1 = np.array(img1).astype('uint8')
+    custom_config = r'--oem 3 --psm 6'
+    string_balance = pytesseract.image_to_string(img1, config=custom_config)
+    return int(string_balance.split('.')[0].split(':')[0].replace(',', ''))
 
