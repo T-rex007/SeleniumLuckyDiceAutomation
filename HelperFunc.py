@@ -144,10 +144,18 @@ def retrieveAmount(driver, game_image):
     # Crop image
     imCrop = game_image[int(bal_region[1]):int(bal_region[1]+bal_region[3]), 
                         int(bal_region[0]):int(bal_region[0]+bal_region[2])]
-    im1 = colorThreshold(imCrop)
+    im1 = thresholding(imCrop)
+    plt.imshow(imCrop)
     img1 = np.abs(im1.astype( int) - 255)
     img1 = np.array(img1).astype('uint8')
     custom_config = r'--oem 3 --psm 6'
     string_balance = pytesseract.image_to_string(img1, config=custom_config)
-    return int(string_balance.split('.')[0].split(':')[0].replace(',', ''))
+    print("OCR String")
+    print(string_balance)
+    tmp = int(string_balance.split('\n')[0][:-2].replace(',', '').replace(';', '').replace('.','').replace(':', ''))
+    return tmp
 
+def setAmount(driver,num_clicks, board_coord):
+    for i in range(int(num_clicks -1)):
+        game_image = getGameImage(driver, "layer2")
+        clickScreen(driver,board_coord[0])
