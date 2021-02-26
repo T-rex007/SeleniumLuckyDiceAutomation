@@ -5,23 +5,29 @@ Email : shaqc777@yahoo.com
 Github: https://github.com/T-rex007
 """
 
-from   selenium import webdriver
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+import HelperFunc as hf
 import pytesseract
 import cv2
 import time
-import HelperFunc as hf
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import base64
+import cv2
+import numpy as np
 
 ### User Inputs (to be  programmed)
 ################################## Betting Amount #########################################################
-user_s_amount_raw = input("'live' or 'demo' betting" \n>>>")
-try:
-    user_s_amount  = int(user_s_amount_raw)
-except:
-    print("Please ensure to enter correct data formats")
-assert((user_s_amount%50)== 0)
+live_or_demo = input("'live' or 'demo' betting" \n>>>")
+assert((live_or_demo== 'live')|(live_or_demo == 'demo'))
+
 
 ################################## Betting Amount #########################################################
 user_s_amount_raw = input("Please enter Starting betting amount \n>>>")
@@ -55,7 +61,7 @@ except:
 assert(recovery_factor>0)
 
 ######################################### Board type ###################################################
-board_type_raw = input("Please enter board type \n >>>")
+board_type = input("Please enter board type \n >>>")
 assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
 
 
@@ -72,8 +78,31 @@ r1 = (1065, 188, 84, 35)
 r2  = (1160, 189, 86, 33)
 
 ### Initialize Driver
-driver = webdriver.Firefox()
-driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
+if(live_or_demo == 'demo'):
+    ### Initialize Diver
+    driver = webdriver.Firefox()
+    driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
+else:
+    ### Initialize Diver
+    driver = webdriver.Firefox()
+    driver.get("https://casino.bet9ja.com/casino/category/all")
+
+    ### Enter credentials
+    username_element = driver.find_element_by_name("username")
+    password_element = driver.find_element_by_name("password")
+
+    username_element.send_keys("Donbull001")
+    password_element.send_keys("Post20192020", Keys.RETURN)
+    element = driver.find_element_by_xpath("//div[@id='18000']//div[@class='game__info']//button[@class='btn-primary-xxs']")
+    action = webdriver.common.action_chains.ActionChains(driver)
+    action.move_to_element_with_offset(element, 10, 10)
+    action.click()
+    action.perform()
+
+
+
+
+
 time.sleep(5)
 GAME_CANVAS = "layer2"
 game_img = hf.getGameImage(driver, GAME_CANVAS)
