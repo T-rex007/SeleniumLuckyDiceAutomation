@@ -15,6 +15,7 @@ import cv2
 import numpy as np
 import sys
 import argparse
+import matplotlib.pyplot as plt
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -35,10 +36,10 @@ args = parser.parse_args()
 assert((args.mode == 'demo')|(args.mode =='live')|(args.mode=='test')|(args.mode=='live-test')), assertion_statment
 
 if __name__ == '__main__' :
-    print('Runnin Bot in {} mode'.format(args.mode))
+    print('Running Bot in {} mode'.format(args.mode))
     if ((args.mode == 'demo')| (args.mode =='live')):
         ################################## Betting Amount #########################################################
-        user_s_amount_raw = input("Please enter Starting betting amount \n>>>")
+        user_s_amount_raw = input("Please enter Starting betting amount \n\t>>>")
         try:
             user_s_amount  = int(user_s_amount_raw)
         except:
@@ -46,7 +47,7 @@ if __name__ == '__main__' :
         assert((user_s_amount%50)== 0)
 
         ######################################## Sleep time ###################################################
-        sleeptime_raw = input("Please Enter Sleep time \n>>>")
+        sleeptime_raw = input("Please Enter Sleep time \n\t>>>")
         try:
             sleeptime  = abs(int(sleeptime_raw))
         except:
@@ -73,10 +74,10 @@ if __name__ == '__main__' :
         assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
     else:
         ### Testing mode Developer specified test cases
-        recovery_factor = 2
-        user_numberofwins = 2
-        user_s_amount = 300
-        sleeptime_raw = 10
+        recovery_factor = 1
+        user_numberofwins = 5
+        user_s_amount = 50
+        sleeptime = 2
         board_type = 'hi'
 
 
@@ -90,17 +91,22 @@ if __name__ == '__main__' :
     r_stake = (987, 653, 272, 63)
     r1 = (1065, 188, 84, 35)
     r2  = (1160, 189, 86, 33)
+    win_size = (1280,947)
 
     ### Initialize Driver
     if((args.mode == 'demo')| (args.mode == 'test')):
         ### Initialize Diver
         driver = webdriver.Firefox()
         driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
+        time.sleep(5)
+        driver.set_window_size(1280,947)
+        
+        print(driver.get_window_size())
+        #assert(0)
     elif((args.mode == 'live')|(args.mode =='live-test')):
         ### Initialize Diver
         driver_login = webdriver.Firefox()
         driver_login.get("https://casino.bet9ja.com/casino/category/all")
-
         ### Enter credentials
         username_element = driver_login.find_element_by_name("username")
         password_element = driver_login.find_element_by_name("password")
@@ -112,17 +118,27 @@ if __name__ == '__main__' :
         # action.move_to_element_with_offset(element, 10, 10)
         # action.click()
         # # action.perform()
-        driver_login = webdriver.Firefox()
-        driver_login.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=564aae1a-5176-675e-d268-74b1e1d59dda&pff=0&tmp=1614352478")
+        logged_in_url = input("Please enter live url \n >>>")
+        #driver_login.close()
+        driver = webdriver.Firefox()
+        driver.get(logged_in_url)
+        driver.set_window_size(1280,947)
 
-
-    time.sleep(5)
+    print('Wait until the page has loaded before continuing!')
+    start = input("Start y or n : ")
+    # driver.close()
+    #driver = webdriver.Firefox()
+    # driver.get(logged_in_url)
+    driver.set_window_size(1280,947)
+    # start = input("Start y or n : ")
     GAME_CANVAS = "layer2"
     game_img = hf.getGameImage(driver, GAME_CANVAS)
 
     ### Press Continue
     tmp =  hf.getTemplate("continue")
     game_image = hf.getGameImage(driver, GAME_CANVAS)
+    #plt.imshow(game_image)
+    #plt.show()
     coord  = hf.detectTemplate(game_image, tmp, False, -1)
     hf.clickScreen(driver,coord[0])
 
@@ -163,7 +179,7 @@ if __name__ == '__main__' :
             print("Reinitializing driver")
             driver = webdriver.Firefox()
             driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
-            time.sleep(5)
+            time.sleep(20)
             GAME_CANVAS = "layer2"
             game_img = hf.getGameImage(driver, GAME_CANVAS)
 
@@ -218,7 +234,7 @@ if __name__ == '__main__' :
             data_dict['second_dice'].append(num2)
             count = count + 1
 
-        
+            assert(2<=(num1 + num2)<= 12), "Oh No something went wrong \n Try not to interfare with the window"
             ### if board type is high
             if(board_type == 'lo'):
                 if(2<=(num1+ num2) <=5):
@@ -266,7 +282,7 @@ if __name__ == '__main__' :
                     print("Loss!")
                     print("Apply recovery Factor")
                     amt = amt *recovery_factor
-                    num_clicks = amt/50
+                    num_clicks = amt/50 +1
                     hf.setAmount(driver, num_clicks, board_coord)
 
             time.sleep(2)
