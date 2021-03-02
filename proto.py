@@ -11,8 +11,6 @@ import time
 import numpy as np
 import pandas as pd
 import base64
-import cv2
-import numpy as np
 import sys
 import argparse
 import matplotlib.pyplot as plt
@@ -22,10 +20,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-
+from datetime import datetime
 
 
 parser = argparse.ArgumentParser()
@@ -77,13 +74,18 @@ if __name__ == '__main__' :
         recovery_factor = 1
         user_numberofwins = 5
         user_s_amount = 50
+        user_s_bet_amount = 300
         sleeptime = 2
         board_type = 'hi'
+    
+    ###Error Stament
+    error1_statment = "Oh No something went wrong \n Try not to interfare with the window: Error 1"
 
 
     amount_list_sorted =  ['50', '250', '1k', '5k', '25k', '250k', '1m']
     data_dict= {'first_dice':[],
-                'second_dice': []}
+                'second_dice': [],
+                'board_type':[]}
     amount_dict = {'amt_region':(1098, 478), '50': (915, 484), '250':(800, 485), 
                 '1k':(676, 485), '5k':(553, 485), '25k':(434, 484), 
                 '250k': (309, 484), '1m': (184, 484)}
@@ -126,22 +128,21 @@ if __name__ == '__main__' :
 
     print('Wait until the page has loaded before continuing!')
     start = input("Start y or n : ")
-    # driver.close()
-    #driver = webdriver.Firefox()
-    # driver.get(logged_in_url)
+    if(start != 'y'):
+        ### Stop the programm
+        print("Exiting bot.....")
+        driver.close()
+        sys.exit()  
+    
     driver.set_window_size(1280,947)
-    # start = input("Start y or n : ")
     GAME_CANVAS = "layer2"
     game_img = hf.getGameImage(driver, GAME_CANVAS)
 
     ### Press Continue
     tmp =  hf.getTemplate("continue")
-    game_image = hf.getGameImage(driver, GAME_CANVAS)
-    #plt.imshow(game_image)
-    #plt.show()
+
     coord  = hf.detectTemplate(game_image, tmp, False, -1)
     hf.clickScreen(driver,coord[0])
-
 
     ### Select Board
     tmp =  hf.getTemplate(board_type)
@@ -159,17 +160,20 @@ if __name__ == '__main__' :
     losses = 0
     countstop = 10
     wins = 0
-    amt = user_s_amount
+    amt = user_s_amount 
+    match = False
+    pattern_found = True
     while(1):
         if (count == countstop):
             df =pd.DataFrame(data_dict)
-            df.to_csv("Data/Pattern{}".format(batch))
+            df.to_csv("Data/Pattern-"+str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
             batch = batch + 1
             count = 0
             wins = 0
             losses = 0
             data_dict= {'first_dice':[],
-                        'second_dice': []}
+                        'second_dice': [],
+                            'board_type':[]}
             print("Pattern {} Finished".format(batch))
             print("Saving pattern CSV")
             print("Closing Driver.......")
@@ -191,6 +195,8 @@ if __name__ == '__main__' :
             #balance = hf.retrieveAmount(driver)
 
             ### Select Board
+
+
             tmp =  hf.getTemplate(board_type)
             game_image = hf.getGameImage(driver, GAME_CANVAS)
             board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
@@ -228,20 +234,43 @@ if __name__ == '__main__' :
             str2 = pytesseract.image_to_string(img2, config=custom_config)
             num1 = hf.decodeString(str1.split('\n')[0])
             num2 = hf.decodeString(str2.split('\n')[0])
-            
+            dice_sum = num1 + num2
+
+            assert(2<=(dice_sum)<= 12), error1_statment
+
             ### Save Numbers to data dictionary
             data_dict['first_dice'].append(num1)
             data_dict['second_dice'].append(num2)
-            count = count + 1
 
-            assert(2<=(num1 + num2)<= 12), "Oh No something went wrong \n Try not to interfare with the window"
+            if(dice_sum > 8):
+                data_dict['board_type'].append('hi')
+            elif(6<=dice_sum<=8):
+                data_dict['board_type'].append('mid')
+            elif(dice_sum<6):
+                data_dict['board_type'].append('lo')
+            else:
+                print("Something went wrong here: Error 3")
+
+            print("Cross referencing patterns")
+            match, pattern = hf.CheckPattern(data_dict)
+            if(match == True):
+                print("A Pattern was found!")
+                amt = user_s_bet_amount
+            elif(match == False):
+                print("No Pattern found!")
+    
             ### if board type is high
             if(board_type == 'lo'):
-                if(2<=(num1+ num2) <=5):
+                if(2<=(dice_sum) <=5):
                     wins = wins + 1
                     losses = 0
                     print("Win!")
-                    amt = user_s_amount
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                    else:
+                        ###If pattern not found 
+                        amt = user_s_amount
                     time.sleep(5)
                     num_clicks = amt/50 + 1 
                     hf.setAmount(driver, num_clicks, board_coord)
@@ -255,7 +284,7 @@ if __name__ == '__main__' :
                     hf.setAmount(driver, num_clicks, board_coord)
             ### If board type is mid
             elif(board_type == 'mid'):
-                if(6<=(num1+ num2) <=8):
+                if(6<=dice_sum<=8):
                     wins = wins + 1
                     losses = 0
                     print("Win!")
@@ -273,7 +302,7 @@ if __name__ == '__main__' :
                     hf.setAmount(driver, num_clicks, board_coord)
             ### etc    
             elif(board_type == 'hi'):
-                if(9<=(num1+ num2) <=12):
+                if(9<=dice_sum <=12):
                     wins = wins + 1
                     losses = 0
                 else:
@@ -284,19 +313,21 @@ if __name__ == '__main__' :
                     amt = amt *recovery_factor
                     num_clicks = amt/50 +1
                     hf.setAmount(driver, num_clicks, board_coord)
-
+            
+ 
+            count = count + 1
             time.sleep(2)
-                    
             print(num1)
             print(num2)
             print("The Number of consecutive wins: {}".format(wins))
             print("THe Number of bets: {}".format(count))
             #print("Current Stake amount: {}".format(amt))
 
+
             if (wins== user_numberofwins):
-                print("\t I have won: {} times".format(wins))
-                print("\t Time to take a nap")
+                print("\tI have won: {} times".format(wins))
+                print("\tTime to take a nap")
                 time.sleep(60*sleeptime)
                 print("Time to wake up")
-            print("***********************************************************")
+            print("*****************************************************************")
             print()

@@ -1,0 +1,11 @@
+,first_dice,second_dice,board_type
+0,1,5,mid
+1,4,6,hi
+2,5,4,hi
+3,6,4,hi
+4,4,3,mid
+5,1,2,lo
+6,4,6,hi
+7,3,1,lo
+8,3,2,lo
+9,1,1,lo

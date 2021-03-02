@@ -5,14 +5,18 @@ Github:
 Decription: 
 """
 import time
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
 import base64
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import pytesseract
+import os
+import pandas as pd
+
+from tqdm import tqdm
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -159,3 +163,24 @@ def setAmount(driver,num_clicks, board_coord):
     for i in range(int(num_clicks -1)):
         game_image = getGameImage(driver, "layer2")
         clickScreen(driver,board_coord[0])
+
+def CheckPattern(data_dict):
+    """
+    Returns if there is any matching pattern
+    args: Current pattern
+    """
+    match = True
+    datafile = os.listdir('Data')
+    print("Checking pattern.....")
+    for i in tqdm(range(len(datafile))):
+        df = pd.read_csv("Data/{}".format(datafile[i]), index_col = None, usecols =['second_dice', 'first_dice'])
+        tmp1 = df['first_dice']
+        tmp2 = df['second_dice']
+        
+        for i2 in range(len(data_dict["first_dice"])):
+            if((tmp1[i2] !=data_dict["first_dice"][i2]) and (tmp2[i2] !=data_dict["second_dice"][i2])):
+                match = False
+                break
+        if(match == True):
+            return (match, df)
+    return (match,None)
