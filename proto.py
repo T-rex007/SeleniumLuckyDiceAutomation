@@ -78,9 +78,14 @@ if __name__ == '__main__' :
         sleeptime = 2
         board_type = 'hi'
     
-    ###Error Stament
-    error1_statment = "Oh No something went wrong \n Try not to interfare with the window: Error 1"
+    ###Error StamentS 
+    ERROR1_STATEMENT = "Oh No! Something went wrong \n Try not to interfare with the window: Error 1"
+    ERROR2_STATEMENT = "Oh No! Something went wrong! Error 2"
+    ERROR3_STATEMENT = "Oh No! Something went wrong! Error 3"
+    #ERROR4_STATEMENT = "Something Went Wrong! :( Error 4 "
 
+    DEMO_GAME_URL = "https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195"
+    GAME_CANVAS = "layer2"
 
     amount_list_sorted =  ['50', '250', '1k', '5k', '25k', '250k', '1m']
     data_dict= {'first_dice':[],
@@ -135,8 +140,8 @@ if __name__ == '__main__' :
         sys.exit()  
     
     driver.set_window_size(1280,947)
-    GAME_CANVAS = "layer2"
-    game_img = hf.getGameImage(driver, GAME_CANVAS)
+    
+    game_image = hf.getGameImage(driver, GAME_CANVAS)
 
     ### Press Continue
     tmp =  hf.getTemplate("continue")
@@ -145,6 +150,7 @@ if __name__ == '__main__' :
     hf.clickScreen(driver,coord[0])
 
     ### Select Board
+    board_dict = hf.getAllBoardCoord(driver)
     tmp =  hf.getTemplate(board_type)
     game_image = hf.getGameImage(driver, GAME_CANVAS)
     board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
@@ -166,7 +172,7 @@ if __name__ == '__main__' :
     while(1):
         if (count == countstop):
             df =pd.DataFrame(data_dict)
-            df.to_csv("Data/Pattern-"+str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S")))
+            df.to_csv("Data/Pattern-"+str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))+ ".csv")
             batch = batch + 1
             count = 0
             wins = 0
@@ -185,7 +191,6 @@ if __name__ == '__main__' :
             driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
             time.sleep(20)
             GAME_CANVAS = "layer2"
-            game_img = hf.getGameImage(driver, GAME_CANVAS)
 
             ### Press Continue
             tmp =  hf.getTemplate("continue")
@@ -236,7 +241,7 @@ if __name__ == '__main__' :
             num2 = hf.decodeString(str2.split('\n')[0])
             dice_sum = num1 + num2
 
-            assert(2<=(dice_sum)<= 12), error1_statment
+            assert(2<=(dice_sum)<= 12), ERROR1_STATEMENT
 
             ### Save Numbers to data dictionary
             data_dict['first_dice'].append(num1)
@@ -249,17 +254,20 @@ if __name__ == '__main__' :
             elif(dice_sum<6):
                 data_dict['board_type'].append('lo')
             else:
-                print("Something went wrong here: Error 3")
+                print(ERROR2_STATEMENT)
 
             print("Cross referencing patterns")
-            match, pattern = hf.CheckPattern(data_dict)
-            if(match == True):
-                print("A Pattern was found!")
-                amt = user_s_bet_amount
-            elif(match == False):
-                print("No Pattern found!")
-    
-            ### if board type is high
+            if(count>3):
+                match, pattern = hf.CheckPattern(data_dict)
+                if(match == True):
+                    print("A Pattern was found!")
+                    amt = user_s_bet_amount
+                    match = True
+                elif(match == False):
+                    match = False
+                    print("No Pattern found!")
+        
+            ### if board type is lo
             if(board_type == 'lo'):
                 if(2<=(dice_sum) <=5):
                     wins = wins + 1
@@ -288,6 +296,14 @@ if __name__ == '__main__' :
                     wins = wins + 1
                     losses = 0
                     print("Win!")
+                    
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                    else:
+                        ###If pattern not found 
+                        amt = user_s_amount
+                    
                     amt = user_s_amount
                     time.sleep(5)
                     num_clicks = amt/50 + 1 
@@ -300,11 +316,29 @@ if __name__ == '__main__' :
                     amt = amt *recovery_factor
                     num_clicks = amt/50 + 1
                     hf.setAmount(driver, num_clicks, board_coord)
-            ### etc    
+            ### if board is hi   
             elif(board_type == 'hi'):
                 if(9<=dice_sum <=12):
                     wins = wins + 1
                     losses = 0
+                    print("Win!")
+                    
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                        ### Set the next pattern
+                        board_from_pattern = board_dict[pattern['board_type'][len(data_dict['board_type']) +1]]
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_coord)
+                    else:
+                        ###If pattern not found 
+                        amt = user_s_amount
+                
+    
+                    time.sleep(5)
+                    num_clicks = amt/50 + 1 
+                    hf.setAmount(driver, num_clicks, board_coord)
                 else:
                     losses = losses + 1
                     wins = 0
@@ -312,9 +346,11 @@ if __name__ == '__main__' :
                     print("Apply recovery Factor")
                     amt = amt *recovery_factor
                     num_clicks = amt/50 +1
+                    match = False
                     hf.setAmount(driver, num_clicks, board_coord)
-            
- 
+            else: 
+                print(ERROR3_STATEMENT)
+
             count = count + 1
             time.sleep(2)
             print(num1)

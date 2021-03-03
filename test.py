@@ -38,6 +38,21 @@ def CheckPattern(data_dict):
             return (match, df)
     return (match,None)
 
+def getAllBoardCoord(driver):
+    """
+    Return a dictionary of Courdinates of different board locations
+    args:
+        driver - Selenium webdriver
+    """
+    board_list = ['hi', 'mid', 'lo']
+    board_dict = {}
+    for b in board_list: 
+        tmp =  hf.getTemplate(b)
+        game_image = hf.getGameImage(driver, 'layer2')
+        board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
+        board_dict[b] = board_coord
+    return board_dict
+
 if(__name__=="__main__"):
     logged_in_url = "https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195"
     driver = webdriver.Firefox()
@@ -51,15 +66,8 @@ if(__name__=="__main__"):
     tmp =  hf.getTemplate("continue")
     coord  = hf.detectTemplate(game_image, tmp, False, -1)
     hf.clickScreen(driver,coord[0])
-
-    def getAllBoardCoord(driver):
-        board_list = ['hi', 'mid', 'lo']
-        board_dict = {}
-        for b in board_list: 
-            tmp =  hf.getTemplate(b)
-            game_image = hf.getGameImage(driver, 'layer2')
-            board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
-            board_dict[b] = board_coord
-        print(board_dict)
+    df = pd.read_csv('Data/Pattern-2021-03-02-18-35-50', index_col=None,usecols =['second_dice', 'first_dice','board_type'])
+    print(df['board_type'])
+    print(getAllBoardCoord(driver))
 
     driver.close()

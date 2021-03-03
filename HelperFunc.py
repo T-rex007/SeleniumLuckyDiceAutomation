@@ -67,6 +67,12 @@ def detectTemplate(image, template, visualize = False, method_num = -1):
     return (top_left, bottom_right, res)
 
 def clickScreen(driver, top_left):
+    """
+    Performa click at the coordinates of top_left to the website 
+    opened by the driver
+    args:
+        driver - Selenium webdriver
+    """
     try:
         #myElem = WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.CLASS_NAME, 'game')))
         game_element = driver.find_element_by_class_name("game")
@@ -162,7 +168,7 @@ def retrieveAmount(driver, game_image):
 def setAmount(driver,num_clicks, board_coord):
     for i in range(int(num_clicks -1)):
         game_image = getGameImage(driver, "layer2")
-        clickScreen(driver,board_coord[0])
+        clickScreen(driver,board_coord)
 
 def CheckPattern(data_dict):
     """
@@ -184,3 +190,18 @@ def CheckPattern(data_dict):
         if(match == True):
             return (match, df)
     return (match,None)
+
+def getAllBoardCoord(driver):
+    """
+    Return a dictionary of Courdinates of different board locations
+    args:
+        driver - Selenium webdriver
+    """
+    board_list = ['hi', 'mid', 'lo']
+    board_dict = {}
+    for b in board_list: 
+        tmp =  getTemplate(b)
+        game_image = getGameImage(driver, 'layer2')
+        board_coord  = detectTemplate(game_image, tmp, False, -1)
+        board_dict[b] = board_coord
+    return board_dict
