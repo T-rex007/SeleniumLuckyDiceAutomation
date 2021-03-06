@@ -94,6 +94,11 @@ if __name__ == '__main__' :
     amount_dict = {'amt_region':(1098, 478), '50': (915, 484), '250':(800, 485), 
                 '1k':(676, 485), '5k':(553, 485), '25k':(434, 484), 
                 '250k': (309, 484), '1m': (184, 484)}
+    test_data_dict = {'first_dice':[6,4,5,1,3,6,6,5,5,1],
+                'second_dice': [5,4,4,6,2,4,4,2,3,2],
+                'board_type':['hi','mid','hi','mid','lo','hi','hi','mid','mid','lo']}
+
+
 
     r_stake = (987, 653, 272, 63)
     r1 = (1065, 188, 84, 35)
@@ -257,8 +262,8 @@ if __name__ == '__main__' :
                 print(ERROR2_STATEMENT)
 
             print("Cross referencing patterns")
-            if(count>3):
-                match, pattern = hf.CheckPattern(data_dict)
+            if(count>=5):
+                match, pattern = hf.CheckPattern(test_data_dict)
                 if(match == True):
                     print("A Pattern was found!")
                     amt = user_s_bet_amount
@@ -327,18 +332,15 @@ if __name__ == '__main__' :
                         ### If pattern found
                         amt = user_s_bet_amount
                         ### Set the next pattern
-                        board_from_pattern = board_dict[pattern['board_type'][len(data_dict['board_type']) +1]]
+                        board_from_pattern = board_dict[pattern['board_type'][len(test_data_dict['board_type'])]]               
                         time.sleep(5)
                         num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_coord)
+                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
                     else:
-                        ###If pattern not found 
-                        amt = user_s_amount
-                
-    
-                    time.sleep(5)
-                    num_clicks = amt/50 + 1 
-                    hf.setAmount(driver, num_clicks, board_coord)
+                        amt = user_s_amount    
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_coord[0])
                 else:
                     losses = losses + 1
                     wins = 0
@@ -347,7 +349,7 @@ if __name__ == '__main__' :
                     amt = amt *recovery_factor
                     num_clicks = amt/50 +1
                     match = False
-                    hf.setAmount(driver, num_clicks, board_coord)
+                    hf.setAmount(driver, num_clicks, board_coord[0])
             else: 
                 print(ERROR3_STATEMENT)
 

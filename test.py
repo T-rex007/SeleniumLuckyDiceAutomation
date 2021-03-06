@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""
+Author: Tyrel Cadogan
+Email : shaqc777@yahoo.com
+Github: https://github.com/T-rex007
+"""
 import cv2
 import numpy as np
 import pandas as pd 
