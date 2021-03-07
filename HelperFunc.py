@@ -2,7 +2,7 @@
 Author: Tyrel Cadogan
 Email: shaqc777@yahoo.com
 Github:  
-Decription: 
+Decription: Module Containing support Funcitons for the Lucky Bice Bot
 """
 import time
 import base64
@@ -211,3 +211,19 @@ def getAllBoardCoord(driver):
         board_coord  = detectTemplate(game_image, tmp, False, -1)
         board_dict[b] = board_coord
     return board_dict
+
+def optimizeAmtClick(amt):
+    """
+    Returns a optimized list of the amounts to click in the game to minimize 
+    """
+    
+    amt_val_lst  = [50,250,1000, 5000,25000,250000,1000000]
+    amt_key_lst  = ['50','250','1k','5k','25k','250k','1m']
+    key_lst = []
+    while(amt != 0):
+        if(np.max(amt_val_lst)<=amt):
+            key_lst.append(amt_key_lst[np.argmax(amt_val_lst)])
+            amt = amt- np.max(amt_val_lst)
+        else:
+            amt_val_lst.pop()
+    return key_lst
