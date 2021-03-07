@@ -62,6 +62,30 @@ def setAmountV2(amt, amount_dict, board_dict):
         hf.clickScreen(driver,amount_dict['amt_region'])
         hf.clickScreen(driver,amount_dict[k])
         hf.clickScreen(driver,board_dict[board_type][0])
+
+def retrieveBalance(driver, game_image):
+    """
+    Return current Amount (int) the player currently has.
+    args: Created Selenium webdriver
+    """
+    bal_region = (1058, 8, 194, 37)
+    game_img = hf.getGameImage(driver, "layer2")
+    # Crop image
+    imCrop = game_image[int(bal_region[1]):int(bal_region[1]+bal_region[3]), 
+                        int(bal_region[0]):int(bal_region[0]+bal_region[2])]
+    im1 = hf.thresholding(imCrop)
+    plt.imshow(imCrop)
+    img1 = np.abs(im1.astype( int) - 255)
+    img1 = np.array(img1).astype('uint8')
+    custom_config = r'--oem 3 --psm 6'
+    string_balance = pytesseract.image_to_string(img1, config=custom_config)
+    print("OCR String")
+    print(string_balance)
+    try:
+        tmp = int(string_balance.split('\n')[0][:-2].replace(',', '').replace(';','').replace('.','').replace(':',''))
+    except:
+        print("Oh No something went wrong with the OCR for the amount balance")
+    return tmp
     
 
 if(__name__ =="__main__"):
@@ -87,9 +111,16 @@ if(__name__ =="__main__"):
     board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
     #hf.clickScreen(driver,board_coord[0])
     setAmountV2(26750, amount_dict, board_dict)
-    
-    
-
-
+    game_image = hf.getGameImage(driver, GAME_CANVAS)
+    #r = cv2.selectROI(game_image)
+    #imCrop = game_image[int(r[1]):int(r[1]+r[3]), int(r[0]):int(r[0]+r[2])]
+    #plt.imshow(imCrop)
+    #plt.show()
+    #print(r)
+   
+    #tmp = hf.retrieveAmount(driver, game_image)
+    #print(tmp)
+    bal = retrieveBalance(driver, game_image)
+    print(bal)
 
 

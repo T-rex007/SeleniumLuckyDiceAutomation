@@ -149,7 +149,7 @@ def colorThreshold(img, rbg_threshold = (60,60,60)):
 
 def retrieveAmount(driver, game_image):
     """
-    Return current Amount (int) the player currently has.
+    Return current Amount (int) the stake.
     args: Created Selenium webdriver
     """
     bal_region = (987, 653, 272, 63)
@@ -166,6 +166,30 @@ def retrieveAmount(driver, game_image):
     print("OCR String")
     print(string_balance)
     tmp = int(string_balance.split('\n')[0][:-2].replace(',', '').replace(';', '').replace('.','').replace(':', ''))
+    return tmp
+    
+def retrieveBalance(driver, game_image):
+    """
+    Return current Amount (int) the player currently has.
+    args: Created Selenium webdriver
+    """
+    bal_region = (1058, 8, 194, 37)
+    game_img = hf.getGameImage(driver, "layer2")
+    # Crop image
+    imCrop = game_image[int(bal_region[1]):int(bal_region[1]+bal_region[3]), 
+                        int(bal_region[0]):int(bal_region[0]+bal_region[2])]
+    im1 = hf.thresholding(imCrop)
+    plt.imshow(imCrop)
+    img1 = np.abs(im1.astype( int) - 255)
+    img1 = np.array(img1).astype('uint8')
+    custom_config = r'--oem 3 --psm 6'
+    string_balance = pytesseract.image_to_string(img1, config=custom_config)
+    print("OCR String")
+    print(string_balance)
+    try:
+        tmp = int(string_balance.split('\n')[0][:-2].replace(',', '').replace(';','').replace('.','').replace(':',''))
+    except:
+        print("Oh No something went wrong with the OCR for the amount balance")
     return tmp
 
 def setAmount(driver,num_clicks, board_coord):
