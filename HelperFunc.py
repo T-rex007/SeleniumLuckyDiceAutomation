@@ -36,6 +36,9 @@ def getGameImage(driver, el_class_name = None):
     return gray_image
 
 def detectTemplate(image, template, visualize = False, method_num = -1):
+    """
+    Returns img coordinates in 'image' where a match for template has been found.
+    """
     img2 = image
     w, h = template.shape[::-1]
     # All the 6 methods for comparison in a list
@@ -179,7 +182,7 @@ def CheckPattern(data_dict):
     datafile = os.listdir('Data')
     print("Checking pattern.....")
     for i in tqdm(range(len(datafile))):
-        df = pd.read_csv("Data/{}".format(datafile[i]), index_col = None, usecols =['second_dice', 'first_dice'])
+        df = pd.read_csv("Data/{}".format(datafile[i]), index_col = None, usecols =['second_dice', 'first_dice', 'board_type'])
         tmp1 = df['first_dice']
         tmp2 = df['second_dice']
         
@@ -188,7 +191,10 @@ def CheckPattern(data_dict):
                 match = False
                 break
         if(match == True):
+            print("Something - ",datafile[i])
+
             return (match, df)
+        print("Nothing")
     return (match,None)
 
 def getAllBoardCoord(driver):

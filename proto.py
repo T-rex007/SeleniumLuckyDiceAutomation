@@ -262,8 +262,9 @@ if __name__ == '__main__' :
                 print(ERROR2_STATEMENT)
 
             print("Cross referencing patterns")
-            if(count>=5):
-                match, pattern = hf.CheckPattern(test_data_dict)
+            if(count>=2):
+                match, pattern = hf.CheckPattern(data_dict)
+                print(count)
                 if(match == True):
                     print("A Pattern was found!")
                     amt = user_s_bet_amount
@@ -271,59 +272,10 @@ if __name__ == '__main__' :
                 elif(match == False):
                     match = False
                     print("No Pattern found!")
-        
+            count = count + 1
             ### if board type is lo
             if(board_type == 'lo'):
                 if(2<=(dice_sum) <=5):
-                    wins = wins + 1
-                    losses = 0
-                    print("Win!")
-                    if(match == True):
-                        ### If pattern found
-                        amt = user_s_bet_amount
-                    else:
-                        ###If pattern not found 
-                        amt = user_s_amount
-                    time.sleep(5)
-                    num_clicks = amt/50 + 1 
-                    hf.setAmount(driver, num_clicks, board_coord)
-                else:
-                    losses = losses + 1
-                    wins = 0
-                    print("Loss!")
-                    print("Apply a Recovery Factor of {}".format(recovery_factor))
-                    amt = amt *recovery_factor
-                    num_clicks = amt/50 + 1
-                    hf.setAmount(driver, num_clicks, board_coord)
-            ### If board type is mid
-            elif(board_type == 'mid'):
-                if(6<=dice_sum<=8):
-                    wins = wins + 1
-                    losses = 0
-                    print("Win!")
-                    
-                    if(match == True):
-                        ### If pattern found
-                        amt = user_s_bet_amount
-                    else:
-                        ###If pattern not found 
-                        amt = user_s_amount
-                    
-                    amt = user_s_amount
-                    time.sleep(5)
-                    num_clicks = amt/50 + 1 
-                    hf.setAmount(driver, num_clicks, board_coord)
-                else:
-                    losses = losses + 1
-                    wins = 0
-                    print("Loss!")
-                    print("Apply a Recovery Factor of {}".format(recovery_factor))
-                    amt = amt *recovery_factor
-                    num_clicks = amt/50 + 1
-                    hf.setAmount(driver, num_clicks, board_coord)
-            ### if board is hi   
-            elif(board_type == 'hi'):
-                if(9<=dice_sum <=12):
                     wins = wins + 1
                     losses = 0
                     print("Win!")
@@ -332,7 +284,10 @@ if __name__ == '__main__' :
                         ### If pattern found
                         amt = user_s_bet_amount
                         ### Set the next pattern
-                        board_from_pattern = board_dict[pattern['board_type'][len(test_data_dict['board_type'])]]               
+                        print("Look here")
+                        tmp = pattern['board_type']
+                        tmp = tmp[count]
+                        board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         num_clicks = amt/50 + 1 
                         hf.setAmount(driver, num_clicks, board_from_pattern[0])
@@ -346,22 +301,128 @@ if __name__ == '__main__' :
                     wins = 0
                     print("Loss!")
                     print("Apply recovery Factor")
-                    amt = amt *recovery_factor
-                    num_clicks = amt/50 +1
-                    match = False
-                    hf.setAmount(driver, num_clicks, board_coord[0])
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                        ### Set the next pattern
+                        print("Look here")
+                        tmp = pattern['board_type']
+                        tmp = tmp[count]
+                        board_from_pattern = board_dict[tmp]               
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                    else:   
+                        print("Loss!")
+                        print("Apply recovery Factor")
+                        time.sleep(5)
+                        amt = amt *recovery_factor
+                        num_clicks = amt/50 +1
+                        hf.setAmount(driver, num_clicks, board_coord[0])
+            ### If board type is mid
+            elif(board_type == 'mid'):
+                if(6<=dice_sum<=8):
+                    wins = wins + 1
+                    losses = 0
+                    print("Win!")
+                    
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                        ### Set the next pattern
+                        print("Look here")
+                        tmp = pattern['board_type']
+                        tmp = tmp[count]
+                        board_from_pattern = board_dict[tmp]               
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                    else:
+                        amt = user_s_amount    
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_coord[0])
+                else:
+                    losses = losses + 1
+                    wins = 0
+                    print("Loss!")
+                    print("Apply recovery Factor")
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                        ### Set the next pattern
+                        print("Look here")
+                        tmp = pattern['board_type']
+                        tmp = tmp[count]
+                        board_from_pattern = board_dict[tmp]               
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                    else:   
+                        print("Loss!")
+                        print("Apply recovery Factor")
+                        time.sleep(5)
+                        amt = amt *recovery_factor
+                        num_clicks = amt/50 +1
+                        hf.setAmount(driver, num_clicks, board_coord[0])
+            ### if board is hi   
+            elif(board_type == 'hi'):
+                if(9<=dice_sum <=12):
+                    wins = wins + 1
+                    losses = 0
+                    print("Win!")
+                    
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                        ### Set the next pattern
+                        print("Look here")
+                        tmp = pattern['board_type']
+                        tmp = tmp[count]
+                        board_from_pattern = board_dict[tmp]               
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                    else:
+                        amt = user_s_amount    
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_coord[0])
+                else:
+                    losses = losses + 1
+                    wins = 0
+                    print("Loss!")
+                    print("Apply recovery Factor")
+                    if(match == True):
+                        ### If pattern found
+                        amt = user_s_bet_amount
+                        ### Set the next pattern
+                        print("Look here")
+                        tmp = pattern['board_type']
+                        tmp = tmp[count]
+                        board_from_pattern = board_dict[tmp]               
+                        time.sleep(5)
+                        num_clicks = amt/50 + 1 
+                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                    else:   
+                        print("Loss!")
+                        print("Apply recovery Factor")
+                        time.sleep(5)
+                        amt = amt *recovery_factor
+                        num_clicks = amt/50 +1
+                        hf.setAmount(driver, num_clicks, board_coord[0])
             else: 
                 print(ERROR3_STATEMENT)
 
-            count = count + 1
+            
             time.sleep(2)
             print(num1)
             print(num2)
             print("The Number of consecutive wins: {}".format(wins))
             print("THe Number of bets: {}".format(count))
             #print("Current Stake amount: {}".format(amt))
-
-
+            
+            print("Press CTRL + C to close the program")
             if (wins== user_numberofwins):
                 print("\tI have won: {} times".format(wins))
                 print("\tTime to take a nap")

@@ -32,7 +32,7 @@ def CheckPattern(data_dict):
     datafile = os.listdir('Data')
     print("Checking pattern.....")
     for i in tqdm(range(len(datafile))):
-        df = pd.read_csv("Data/{}".format(datafile[i]), index_col = None, usecols =['second_dice', 'first_dice'])
+        df = pd.read_csv("Data/{}".format(datafile[i]), index_col = None, usecols =['second_dice', 'first_dice', 'board_type'])
         tmp1 = df['first_dice']
         tmp2 = df['second_dice']
         
@@ -73,7 +73,7 @@ if(__name__=="__main__"):
     coord  = hf.detectTemplate(game_image, tmp, False, -1)
     hf.clickScreen(driver,coord[0])
     df = pd.read_csv('Data/Pattern-2021-03-02-18-35-50', index_col=None,usecols =['second_dice', 'first_dice','board_type'])
-    print(df['board_type'])
-    print(getAllBoardCoord(driver))
+    #print(df['board_type'])
+    #print(getAllBoardCoord(driver))
 
     driver.close()
