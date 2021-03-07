@@ -173,6 +173,20 @@ def setAmount(driver,num_clicks, board_coord):
         game_image = getGameImage(driver, "layer2")
         clickScreen(driver,board_coord)
 
+def setAmountV2(driver, amt, amount_dict, board_coord):
+    """
+    Performs the optimal clicks for the given amt
+    args:
+        amt - Stake
+        amount_dict - Dictionary of coordinates for amount selections
+        board_dict - Dictionary of coordinates for board selection
+    """
+    key_lst =optimizeAmtClick(amt);
+    for k in key_lst:
+        clickScreen(driver,amount_dict['amt_region'])
+        clickScreen(driver,amount_dict[k])
+        clickScreen(driver,board_coord)
+
 def CheckPattern(data_dict):
     """
     Returns if there is any matching pattern
@@ -191,10 +205,7 @@ def CheckPattern(data_dict):
                 match = False
                 break
         if(match == True):
-            print("Something - ",datafile[i])
-
             return (match, df)
-        print("Nothing")
     return (match,None)
 
 def getAllBoardCoord(driver):

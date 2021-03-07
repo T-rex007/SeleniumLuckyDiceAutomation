@@ -61,10 +61,8 @@ def setAmountV2(amt, amount_dict, board_dict):
     for k in key_lst:
         hf.clickScreen(driver,amount_dict['amt_region'])
         hf.clickScreen(driver,amount_dict[k])
-        print("clicking {}", k)
-        time.sleep(1)
         hf.clickScreen(driver,board_dict[board_type][0])
-    print(key_lst)
+    
 
 if(__name__ =="__main__"):
 
@@ -88,8 +86,7 @@ if(__name__ =="__main__"):
     game_image = hf.getGameImage(driver, GAME_CANVAS)
     board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
     #hf.clickScreen(driver,board_coord[0])
-
-
+    setAmountV2(amt, amount_dict, board_dict)
 
     
 

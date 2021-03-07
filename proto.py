@@ -69,9 +69,16 @@ if __name__ == '__main__' :
         ######################################### Board type ###################################################
         board_type = input("Please enter board type \n >>>")
         assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
+        if (args.mode == 'live'):
+            username = input("Please enter user name \n\t>>>")
+            password = input("Please enter password \n\t>>>")
+        else:
+            username = None
+            password = None
+        
     else:
         ### Testing mode Developer specified test cases
-        recovery_factor = 1
+        recovery_factor = 5
         user_numberofwins = 5
         user_s_amount = 50
         user_s_bet_amount = 300
@@ -123,15 +130,10 @@ if __name__ == '__main__' :
         username_element = driver_login.find_element_by_name("username")
         password_element = driver_login.find_element_by_name("password")
 
-        username_element.send_keys("Donbull001")
-        password_element.send_keys("Post20192020", Keys.RETURN)
-        # element = driver.find_element_by_xpath("//div[@id='18000']//div[@class='game__info']//button[@class='btn-primary-xxs']")
-        # action = webdriver.common.action_chains.ActionChains(driver)
-        # action.move_to_element_with_offset(element, 10, 10)
-        # action.click()
-        # # action.perform()
+        username_element.send_keys(username)
+        password_element.send_keys(password, Keys.RETURN)
+
         logged_in_url = input("Please enter live url \n >>>")
-        #driver_login.close()
         driver = webdriver.Firefox()
         driver.get(logged_in_url)
         driver.set_window_size(1280,947)
@@ -159,11 +161,10 @@ if __name__ == '__main__' :
     tmp =  hf.getTemplate(board_type)
     game_image = hf.getGameImage(driver, GAME_CANVAS)
     board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
-    hf.clickScreen(driver,board_coord[0])
+    #hf.clickScreen(driver,board_coord[0])
 
     ### Select Amount
-    num_clicks = abs(user_s_amount/50)
-    hf.setAmount(driver, num_clicks, board_coord)
+    hf.setAmountV2(driver,user_s_amount, amount_dict, board_coord[0])
 
 
     count  = 0
@@ -289,36 +290,29 @@ if __name__ == '__main__' :
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
                     else:
                         amt = user_s_amount    
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_coord[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
                 else:
                     losses = losses + 1
                     wins = 0
-                    print("Loss!")
-                    print("Apply recovery Factor")
                     if(match == True):
                         ### If pattern found
                         amt = user_s_bet_amount
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
                     else:   
                         print("Loss!")
                         print("Apply recovery Factor")
                         time.sleep(5)
                         amt = amt *recovery_factor
-                        num_clicks = amt/50 +1
-                        hf.setAmount(driver, num_clicks, board_coord[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
             ### If board type is mid
             elif(board_type == 'mid'):
                 if(6<=dice_sum<=8):
@@ -330,41 +324,34 @@ if __name__ == '__main__' :
                         ### If pattern found
                         amt = user_s_bet_amount
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
                     else:
                         amt = user_s_amount    
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_coord[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
                 else:
                     losses = losses + 1
                     wins = 0
-                    print("Loss!")
-                    print("Apply recovery Factor")
+
                     if(match == True):
                         ### If pattern found
                         amt = user_s_bet_amount
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
                     else:   
                         print("Loss!")
                         print("Apply recovery Factor")
                         time.sleep(5)
                         amt = amt *recovery_factor
-                        num_clicks = amt/50 +1
-                        hf.setAmount(driver, num_clicks, board_coord[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
             ### if board is hi   
             elif(board_type == 'hi'):
                 if(9<=dice_sum <=12):
@@ -376,41 +363,33 @@ if __name__ == '__main__' :
                         ### If pattern found
                         amt = user_s_bet_amount
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
                     else:
                         amt = user_s_amount    
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_coord[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
                 else:
                     losses = losses + 1
                     wins = 0
-                    print("Loss!")
-                    print("Apply recovery Factor")
                     if(match == True):
                         ### If pattern found
                         amt = user_s_bet_amount
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        num_clicks = amt/50 + 1 
-                        hf.setAmount(driver, num_clicks, board_from_pattern[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
                     else:   
                         print("Loss!")
                         print("Apply recovery Factor")
                         time.sleep(5)
                         amt = amt *recovery_factor
-                        num_clicks = amt/50 +1
-                        hf.setAmount(driver, num_clicks, board_coord[0])
+                        hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
             else: 
                 print(ERROR3_STATEMENT)
 
