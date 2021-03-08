@@ -78,12 +78,12 @@ if __name__ == '__main__' :
         
     else:
         ### Testing mode Developer specified test cases
-        recovery_factor = 5
+        recovery_factor = 2
         user_numberofwins = 5
         user_s_amount = 50
         user_s_bet_amount = 300
         sleeptime = 2
-        board_type = 'hi'
+        board_type = 'mid'
     
     ###Error StamentS 
     ERROR1_STATEMENT = "Oh No! Something went wrong \n Try not to interfare with the window: Error 1"
@@ -170,7 +170,7 @@ if __name__ == '__main__' :
     count  = 0
     batch = 1
     losses = 0
-    countstop = 10
+    countstop = 100
     wins = 0
     amt = user_s_amount 
     match = False
@@ -183,6 +183,7 @@ if __name__ == '__main__' :
             count = 0
             wins = 0
             losses = 0
+            match = False
             data_dict= {'first_dice':[],
                         'second_dice': [],
                             'board_type':[]}
@@ -195,7 +196,7 @@ if __name__ == '__main__' :
             print("Reinitializing driver")
             driver = webdriver.Firefox()
             driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
-            time.sleep(20)
+            time.sleep(30)
             GAME_CANVAS = "layer2"
 
             ### Press Continue
@@ -263,9 +264,10 @@ if __name__ == '__main__' :
                 print(ERROR2_STATEMENT)
             
             bal = hf.retrieveBalance(driver, game_image)
-
-            print("Cross referencing patterns")
-            if(count>=2):
+            print("Balance: ",bal)
+            
+            if((count==5) or (match ==True)):
+                print("Cross referencing patterns")
                 match, pattern = hf.CheckPattern(data_dict)
                 print(count)
                 if(match == True):
