@@ -170,7 +170,7 @@ if __name__ == '__main__' :
     count  = 0
     batch = 1
     losses = 0
-    countstop = 100
+    countstop = 10
     wins = 0
     amt = user_s_amount 
     match = False
@@ -178,7 +178,7 @@ if __name__ == '__main__' :
     while(1):
         if (count == countstop):
             df =pd.DataFrame(data_dict)
-            df.to_csv("Data/Pattern-"+str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))+ ".csv")
+            df.to_csv("Data/Pattern{}-".format(batch)+str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))+ ".csv")
             batch = batch + 1
             count = 0
             wins = 0
@@ -220,33 +220,23 @@ if __name__ == '__main__' :
                 
         else:
             ### bet
-            print("Roll #{}".format(count))
+            print("Roll #{}".format(count + 1))
             tmp =  hf.getTemplate("rebet")
             game_image = hf.getGameImage(driver, GAME_CANVAS)
             coord  = hf.detectTemplate(game_image, tmp, False, 3)
             hf.clickScreen(driver,(coord[0][0] + 50, coord[0][1] + 50) )
             time.sleep(10)
             print("Current Stake amount: {}".format(amt))
-            
-            ### Retrieve images Dice number 
-            game_image = hf.getGameImage(driver, GAME_CANVAS)       
-            imCrop1 = game_image[int(r1[1]):int(r1[1]+r1[3]), int(r1[0]):int(r1[0]+r1[2])]
-            imCrop2 = game_image[int(r2[1]):int(r2[1]+r2[3]), int(r2[0]):int(r2[0]+r2[2])]
-            ### Preprocess Image
-            thresh_image1 = hf.thresholding(imCrop1)
-            thresh_image2 = hf.thresholding(imCrop2)
-            img1 = np.abs(thresh_image1.astype( int) - 255)
-            img2 = np.abs(thresh_image2.astype( int) - 255)
-            img1 = np.array(img1).astype('uint8')
-            img2 = np.array(img2).astype('uint8')
-            
-            ### Perform OCR to retreive dice roll
-            custom_config = r'--oem 3 --psm 6'
-            str1 = pytesseract.image_to_string(img1, config=custom_config)
-            str2 = pytesseract.image_to_string(img2, config=custom_config)
-            num1 = hf.decodeString(str1.split('\n')[0])
-            num2 = hf.decodeString(str2.split('\n')[0])
+            time.sleep(10)
+            ### Read dice Value
+            tmp1,tmp2 = hf.getDiceNum(driver)
+            time.sleep(5)
+            tmp3,tmp4 = hf.getDiceNum(driver)
+            assert((tmp1 ==tmp3) and (tmp2 == tmp4)),"Oooops Something went wrong"
+            num1 = tmp3
+            num2 = tmp4
             dice_sum = num1 + num2
+
 
             assert(2<=(dice_sum)<= 12), ERROR1_STATEMENT
 
@@ -266,7 +256,7 @@ if __name__ == '__main__' :
             bal = hf.retrieveBalance(driver, game_image)
             print("Balance: ",bal)
             
-            if((count==5) or (match ==True)):
+            if(count==3):
                 print("Cross referencing patterns")
                 match, pattern = hf.CheckPattern(data_dict)
                 print(count)
@@ -298,7 +288,7 @@ if __name__ == '__main__' :
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:
                         amt = user_s_amount
                         if(amt>bal):
@@ -320,7 +310,7 @@ if __name__ == '__main__' :
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:   
                         print("Loss!")
                         print("Apply recovery Factor")
@@ -350,7 +340,7 @@ if __name__ == '__main__' :
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:
                         amt = user_s_amount
                         if(amt>bal):
@@ -372,7 +362,7 @@ if __name__ == '__main__' :
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:   
                         print("Loss!")
                         print("Apply recovery Factor")
@@ -403,7 +393,7 @@ if __name__ == '__main__' :
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:
                         amt = user_s_amount
                         if(amt>bal):
@@ -425,7 +415,7 @@ if __name__ == '__main__' :
                         tmp = tmp[count]
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern)
+                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:   
                         print("Loss!")
                         print("Apply recovery Factor")
@@ -448,8 +438,8 @@ if __name__ == '__main__' :
             
             print("Press CTRL + C to close the program")
             if (wins== user_numberofwins):
-                print("\tI have won: {} times".format(wins))
-                print("\tTime to take a nap")
+                print("I have won: {} times".format(wins))
+                print("Time to take a nap")
                 time.sleep(60*sleeptime)
                 print("Time to wake up")
             print("*****************************************************************")

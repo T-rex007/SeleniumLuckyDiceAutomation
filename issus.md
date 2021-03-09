@@ -1,0 +1,4 @@
+- Correct numbers form OCR
+- if looses before finding a pattern include amount with betting when a pattern is found 
+- include parttern name and pattern value
+- pattern{x}-datetime (format)

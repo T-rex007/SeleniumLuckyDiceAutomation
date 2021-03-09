@@ -227,6 +227,7 @@ def CheckPattern(data_dict):
                 match = False
                 break
         if(match == True):
+            print(datafile[i])
             return (match, df)
     return (match,None)
 
@@ -260,3 +261,27 @@ def optimizeAmtClick(amt):
         else:
             amt_val_lst.pop()
     return key_lst
+
+def getDiceNum(driver):
+    """
+    Returns a tuple of integers representing the dice numbers 
+    """
+    game_image = getGameImage(driver, 'layer2')       
+    r1 = (1065, 188, 84, 35)
+    r2  = (1160, 189, 86, 33)
+    imCrop1 = game_image[int(r1[1]):int(r1[1]+r1[3]), int(r1[0]):int(r1[0]+r1[2])]
+    imCrop2 = game_image[int(r2[1]):int(r2[1]+r2[3]), int(r2[0]):int(r2[0]+r2[2])]
+    ### Preprocess Image
+    thresh_image1 = thresholding(imCrop1)
+    thresh_image2 = thresholding(imCrop2)
+    img1 = np.abs(thresh_image1.astype( int) - 255)
+    img2 = np.abs(thresh_image2.astype( int) - 255)
+    img1 = np.array(img1).astype('uint8')
+    img2 = np.array(img2).astype('uint8')
+    ### Perform OCR to retreive dice roll
+    custom_config = r'--oem 3 --psm 6'
+    str1 = pytesseract.image_to_string(img1, config=custom_config)
+    str2 = pytesseract.image_to_string(img2, config=custom_config)
+    num1 = decodeString(str1.split('\n')[0])
+    num2 = decodeString(str2.split('\n')[0])
+    return (num1, num2)
