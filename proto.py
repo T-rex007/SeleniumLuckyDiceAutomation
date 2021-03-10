@@ -83,7 +83,7 @@ if __name__ == '__main__' :
         user_s_amount = 50
         user_s_bet_amount = 300
         sleeptime = 2
-        board_type = 'mid'
+        board_type = 'lo'
     
     ###Error StamentS 
     ERROR1_STATEMENT = "Oh No! Something went wrong \n Try not to interfare with the window: Error 1"
@@ -255,11 +255,10 @@ if __name__ == '__main__' :
             
             bal = hf.retrieveBalance(driver, game_image)
             print("Balance: ",bal)
-            
-            if(count==3):
+            count = count + 1 
+            if(count==2):
                 print("Cross referencing patterns")
-                match, pattern = hf.CheckPattern(data_dict)
-                print(count)
+                match, pattern = hf.CheckPattern(test_data_dict)
                 if(match == True):
                     print("A Pattern was found!")
                     amt = user_s_bet_amount
@@ -267,7 +266,9 @@ if __name__ == '__main__' :
                 elif(match == False):
                     match = False
                     print("No Pattern found!")
-            count = count + 1
+            elif(count == countstop):
+                continue
+            
             ### if board type is lo
             if(board_type == 'lo'):
                 if(2<=(dice_sum) <=5):
@@ -283,9 +284,11 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
+
                         tmp = tmp[count]
+                        print("count: ", count )
+                        print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
@@ -301,13 +304,16 @@ if __name__ == '__main__' :
                     wins = 0
                     if(match == True):
                         ### If pattern found
-                        amt = user_s_bet_amount
+                        print("Loss!")
+                        amt = (amt *recovery_factor) + user_s_bet_amount
                         if(amt>bal):
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
                         tmp = pattern['board_type']
                         tmp = tmp[count]
+                        print("count: ", count )
+                        print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
@@ -335,9 +341,11 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
+
                         tmp = tmp[count]
+                        print("count: ", count )
+                        print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
@@ -353,13 +361,16 @@ if __name__ == '__main__' :
                     wins = 0
                     if(match == True):
                         ### If pattern found
-                        amt = user_s_bet_amount
+                        print("Loss!")
+                        amt = (amt *recovery_factor) + user_s_bet_amount
                         if(amt>bal):
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
                         tmp = pattern['board_type']
                         tmp = tmp[count]
+                        print("count: ", count )
+                        print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
@@ -372,7 +383,6 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
-
             ### if board is hi   
             elif(board_type == 'hi'):
                 if(9<=dice_sum <=12):
@@ -388,9 +398,11 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
-                        print("Look here")
                         tmp = pattern['board_type']
+
                         tmp = tmp[count]
+                        print("count: ", count )
+                        print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
@@ -406,13 +418,16 @@ if __name__ == '__main__' :
                     wins = 0
                     if(match == True):
                         ### If pattern found
-                        amt = user_s_bet_amount
+                        print("Loss!")
+                        amt = (amt *recovery_factor) + user_s_bet_amount
                         if(amt>bal):
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
                         tmp = pattern['board_type']
                         tmp = tmp[count]
+                        print("count: ", count )
+                        print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
@@ -427,7 +442,6 @@ if __name__ == '__main__' :
                         hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
             else: 
                 print(ERROR3_STATEMENT)
-
             
             time.sleep(2)
             print(num1)
