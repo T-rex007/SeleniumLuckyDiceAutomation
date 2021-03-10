@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Author: Tyrel Cadogan
 Email: shaqc777@yahoo.com
