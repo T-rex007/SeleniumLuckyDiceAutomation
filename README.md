@@ -14,26 +14,25 @@ This is a commmand line operated automated bot, that was built using Selenium, O
 
 ## Setup 
 <br>
-
 <ul>
     <li>Install python</li>
     <li>Install anaconda</li>
-    <li>Create a conda enviroment </li>
-    <li><code> conda install requirements.txt</code></li>
+    <li>Create a conda enviroment<br> 
+    <code>conda create --name "enviroment-name" --file requirements.txt</code>
+    </li>
+
 </ul>
 
 ## How to run? 
 
 ### To run program in testing mode (input parmeters specified  in code only)
-
 <code>python bot.py test</code>
-
-
-
-
-
-
-
+<br> 
+### To run program in live mode (Where actual money is spent)
+<code>python bot.py live</code>
+<br>  
+### To run the program in demo mode (Ran in dome mode where user input in accepted)
+<code>python bot.py demo</code>
 
 <style>
 code {
