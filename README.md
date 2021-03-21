@@ -29,7 +29,7 @@ In the Terminal You must first Navigate to the folder when program is located. F
 
 <br>
 <code>cd ..</code>
-<br>
+</br>
 <code>cd LuckyDice/SeleniumLuckyDiceAutomation-master </code>
 
 
