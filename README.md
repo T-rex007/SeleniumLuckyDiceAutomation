@@ -27,6 +27,7 @@ This is a commmand line operated automated bot, that was built using Selenium, O
 
 In the Terminal You must first Navigate to the folder when program is located 
 <code>cd ..</code>
+<br>
 <code>cd LuckyDice/SeleniumLuckyDiceAutomation-master </code>
 
 ### To run program in testing mode (input parmeters specified  in code only)
