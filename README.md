@@ -37,7 +37,20 @@ For instance
 <br>
 <code>cd LuckyDice/SeleniumLuckyDiceAutomation-master</code>
 <br>
-
+Then activate virtual Environment using
+<code>conda activate Environment_Name</code>
+<br>
+Example:
+<br>
+<code>conda activate LuckyDice</code>
+<br>
+If by chance you have forgotten the name of the enviromentfor this program, is you can see a list of t enviroments on the systme by using the command
+<br>
+<code>conda info --envs</code>
+<br>
+Or
+<br>
+<code>cond env list</code>
 
 
 
