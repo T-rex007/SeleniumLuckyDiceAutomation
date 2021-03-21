@@ -25,11 +25,16 @@ This is a commmand line operated automated bot, that was built using Selenium, O
 
 ## How to run? 
 
-In the Terminal You must first Navigate to the folder when program is located 
+In the Terminal You must first Navigate to the folder when program is located. For Instance
+
 <br>
-<code>cd ..</code>
+<code>
+    cd ..
+</code>
 <br>
 <code>cd LuckyDice/SeleniumLuckyDiceAutomation-master </code>
+
+
 
 ### To run program in testing mode (input parmeters specified  in code only)
 <code>python bot.py test</code>
