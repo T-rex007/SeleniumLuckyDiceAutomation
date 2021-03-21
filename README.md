@@ -1,4 +1,3 @@
-
 # Dice Game Bot
 <p>
 This is a commmand line operated automated bot, that was built using Selenium, OpenCV and Pytesseract to play an online gambling Game called Lucky Dice.
@@ -8,7 +7,7 @@ This is a commmand line operated automated bot, that was built using Selenium, O
 <br>
 <br>
 
-<img src="ReadMe-files\Lucky Dice.png" alt="Girl in a jacket" style="vertical-align:middle">
+<img src="ReadMe-files\Lucky Dice.png" alt="LuckyDice" style="vertical-align:middle">
 <br>
 <br>
 
@@ -30,7 +29,15 @@ In the Terminal You must first Navigate to the folder when program is located. F
 <br>
 <code>cd ..</code>
 <br>
+This will take you to the root directory and from here you will need to change the director to the directory of the program using 
+<br>
+<code>cd PATH </code>
+<br>
+For instance
+<br>
 <code>cd LuckyDice/SeleniumLuckyDiceAutomation-master</code>
+<br>
+
 
 
 
