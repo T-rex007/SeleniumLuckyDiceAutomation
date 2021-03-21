@@ -29,8 +29,8 @@ In the Terminal You must first Navigate to the folder when program is located. F
 
 <br>
 <code>cd ..</code>
-</br>
-<code>cd LuckyDice/SeleniumLuckyDiceAutomation-master </code>
+<br>
+<code>cd LuckyDice/SeleniumLuckyDiceAutomation-master</code>
 
 
 
@@ -52,4 +52,3 @@ code {
   font-size: 105%;
 }
 </style>
-
