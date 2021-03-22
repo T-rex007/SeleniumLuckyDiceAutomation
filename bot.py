@@ -65,7 +65,13 @@ if __name__ == '__main__' :
         except:
             print("Please ensure to enter correct data formats")
         assert(recovery_factor>0)
-
+        ############################################################################################
+        user_s_bet_amount = input("Please enter the stake amout to use when a pattern is found \n>>>")
+        try:
+            user_s_bet_amount = int(user_s_bet_amount)
+        except:
+            print("Please ensure to enter correct data formats")
+        assert(user_s_bet_amount>0)
         ######################################### Board type ###################################################
         board_type = input("Please enter board type \n >>>")
         assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
@@ -170,7 +176,8 @@ if __name__ == '__main__' :
     count  = 0
     batch = 1
     losses = 0
-    countstop = 10
+    countstop = 100
+    total_wins = 0
     wins = 0
     amt = user_s_amount 
     match = False
@@ -181,7 +188,6 @@ if __name__ == '__main__' :
             df.to_csv("Data/Pattern{}-".format(batch)+str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))+ ".csv")
             batch = batch + 1
             count = 0
-            wins = 0
             losses = 0
             match = False
             data_dict= {'first_dice':[],
@@ -196,6 +202,7 @@ if __name__ == '__main__' :
             print("Reinitializing driver")
             driver = webdriver.Firefox()
             driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
+            driver.set_window_size(1280,947)
             time.sleep(30)
             GAME_CANVAS = "layer2"
 
@@ -215,9 +222,9 @@ if __name__ == '__main__' :
             hf.clickScreen(driver,board_coord[0])
             
             ### Select Amount
-            num_clicks = abs(user_s_amount/50)
-            hf.setAmount(driver, num_clicks, board_coord)
-                
+            #num_clicks = abs(user_s_amount/50)
+            #hf.setAmount(driver, num_clicks, board_coord)
+            hf.setAmountV2(driver,amt, amount_dict, board_coord[0])    
         else:
             ### bet
             print("Roll #{}".format(count + 1))
@@ -256,9 +263,9 @@ if __name__ == '__main__' :
             bal = hf.retrieveBalance(driver, game_image)
             print("Balance: ",bal)
             count = count + 1 
-            if(count==2):
+            if(count==5):
                 print("Cross referencing patterns")
-                match, pattern = hf.CheckPattern(test_data_dict)
+                match, pattern = hf.CheckPattern(data_dict)
                 if(match == True):
                     print("A Pattern was found!")
                     amt = user_s_bet_amount
@@ -266,8 +273,7 @@ if __name__ == '__main__' :
                 elif(match == False):
                     match = False
                     print("No Pattern found!")
-            elif(count == countstop):
-                continue
+
             
             ### if board type is lo
             if(board_type == 'lo'):
@@ -301,7 +307,6 @@ if __name__ == '__main__' :
                         hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
                 else:
                     losses = losses + 1
-                    wins = 0
                     if(match == True):
                         ### If pattern found
                         print("Loss!")
@@ -358,7 +363,6 @@ if __name__ == '__main__' :
                         hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
                 else:
                     losses = losses + 1
-                    wins = 0
                     if(match == True):
                         ### If pattern found
                         print("Loss!")
@@ -415,7 +419,6 @@ if __name__ == '__main__' :
                         hf.setAmountV2(driver,amt, amount_dict, board_coord[0])
                 else:
                     losses = losses + 1
-                    wins = 0
                     if(match == True):
                         ### If pattern found
                         print("Loss!")
@@ -446,7 +449,7 @@ if __name__ == '__main__' :
             time.sleep(2)
             print(num1)
             print(num2)
-            print("The Number of consecutive wins: {}".format(wins))
+            print("The Number of Total wins: {}".format(wins))
             print("THe Number of bets: {}".format(count))
             #print("Current Stake amount: {}".format(amt))
             
@@ -454,6 +457,8 @@ if __name__ == '__main__' :
             if (wins== user_numberofwins):
                 print("I have won: {} times".format(wins))
                 print("Time to take a nap")
+                total_wins = total_wins + wins
+                wins = 0
                 time.sleep(60*sleeptime)
                 print("Time to wake up")
             print("*****************************************************************")
