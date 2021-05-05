@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 import base64
 import sys
+import json
 import argparse
 import matplotlib.pyplot as plt
 
@@ -36,7 +37,7 @@ if __name__ == '__main__' :
     print('Running Bot in {} mode'.format(args.mode))
     if ((args.mode == 'demo')| (args.mode =='live')):
         ################################## Betting Amount #########################################################
-        user_s_amount_raw = input("Please enter Starting betting amount \n\t>>>")
+        user_s_amount_raw = input("Please enter Starting betting amount \n>>>")
         try:
             user_s_amount  = int(user_s_amount_raw)
         except:
@@ -44,14 +45,14 @@ if __name__ == '__main__' :
         assert((user_s_amount%50)== 0)
 
         ######################################## Sleep time ###################################################
-        sleeptime_raw = input("Please Enter Sleep time \n\t>>>")
+        sleeptime_raw = input("Please Enter Sleep time \n>>>")
         try:
             sleeptime  = abs(int(sleeptime_raw))
         except:
             print("Please ensure to enter correct data formats")
 
         ########################################### Number of wins ################################################
-        user_numberofwins_raw = input("Please enter number of wins you woullike to take a break at  \n>>>")
+        user_numberofwins_raw = input("Please enter number of wins you would like to take a break at  \n>>>")
         try:
             user_numberofwins = int(user_numberofwins_raw)
         except:
@@ -76,8 +77,8 @@ if __name__ == '__main__' :
         board_type = input("Please enter board type \n >>>")
         assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
         if (args.mode == 'live'):
-            username = input("Please enter user name \n\t>>>")
-            password = input("Please enter password \n\t>>>")
+            username = input("Please enter user name \n>>>")
+            password = input("Please enter password \n>>>")
         else:
             username = None
             password = None
@@ -85,10 +86,10 @@ if __name__ == '__main__' :
     else:
         ### Testing mode Developer specified test cases
         recovery_factor = 2
-        user_numberofwins = 5
+        user_numberofwins = 1
         user_s_amount = 50
         user_s_bet_amount = 300
-        sleeptime = 2
+        sleeptime = 1
         board_type = 'lo'
     
     ###Error StamentS 
@@ -111,7 +112,9 @@ if __name__ == '__main__' :
                 'second_dice': [5,4,4,6,2,4,4,2,3,2],
                 'board_type':['hi','mid','hi','mid','lo','hi','hi','mid','mid','lo']}
 
-
+    # Loadin Board Nums
+    with open("data.json", "r") as jreader:
+        double_beting_coodinates =json.load(jreader)
 
     r_stake = (987, 653, 272, 63)
     r1 = (1065, 188, 84, 35)
@@ -168,6 +171,10 @@ if __name__ == '__main__' :
     game_image = hf.getGameImage(driver, GAME_CANVAS)
     board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
     #hf.clickScreen(driver,board_coord[0])
+
+    bal = hf.retrieveBalance(driver, game_image)
+
+    #sys.exit()
 
     ### Select Amount
     hf.setAmountV2(driver,user_s_amount, amount_dict, board_coord[0])
@@ -260,7 +267,13 @@ if __name__ == '__main__' :
             else:
                 print(ERROR2_STATEMENT)
             
+            #r = cv2.selectROI(im)
+
+            #imCrop = im[int(r[1]):int(r[1]+r[3]), int(r[0]):int(r[0]+r[2])]
+
             bal = hf.retrieveBalance(driver, game_image)
+
+            #sys.exit()
             print("Balance: ",bal)
             count = count + 1 
             if(count==5):
@@ -297,6 +310,9 @@ if __name__ == '__main__' :
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
+                        coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
+                        hf.clickScreen(driver,coord)
+                        #hf.clickScreen(driver,coord[0])
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:
                         amt = user_s_amount
@@ -321,6 +337,8 @@ if __name__ == '__main__' :
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
+                        coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
+                        hf.clickScreen(driver,coord)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:   
                         print("Loss!")
@@ -353,6 +371,8 @@ if __name__ == '__main__' :
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
+                        coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
+                        hf.clickScreen(driver,coord)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:
                         amt = user_s_amount
@@ -377,6 +397,8 @@ if __name__ == '__main__' :
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
+                        coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
+                        hf.clickScreen(driver,coord)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:   
                         print("Loss!")
@@ -409,6 +431,8 @@ if __name__ == '__main__' :
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
+                        coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
+                        hf.clickScreen(driver,coord)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:
                         amt = user_s_amount
@@ -433,6 +457,8 @@ if __name__ == '__main__' :
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
+                        coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
+                        hf.clickScreen(driver,coord)
                         hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
                     else:   
                         print("Loss!")

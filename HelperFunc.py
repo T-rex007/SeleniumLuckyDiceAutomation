@@ -180,13 +180,17 @@ def retrieveBalance(driver, game_image):
     imCrop = game_image[int(bal_region[1]):int(bal_region[1]+bal_region[3]), 
                         int(bal_region[0]):int(bal_region[0]+bal_region[2])]
     im1 = thresholding(imCrop)
-    plt.imshow(imCrop)
+    #plt.imshow(imCrop)
+    #plt.show()
     img1 = np.abs(im1.astype( int) - 255)
     img1 = np.array(img1).astype('uint8')
     custom_config = r'--oem 3 --psm 6'
     string_balance = pytesseract.image_to_string(img1, config=custom_config)
+    #print("String Balance",string_balance )
     try:
-        tmp = int(string_balance.split('\n')[0][:-2].replace(',', '').replace(';','').replace('.','').replace(':',''))
+        tmp = string_balance.split('\n')[0][:-2].replace(',', '').replace(';','').replace('.','').replace(':','')
+        tmp = ''.join( i for i in tmp if i.isdigit())
+        tmp = int(tmp)
     except:
         print("Oh No something went wrong with the OCR for the amount balance")
     return tmp
