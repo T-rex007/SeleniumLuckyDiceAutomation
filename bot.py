@@ -14,6 +14,7 @@ import base64
 import sys
 import json
 import argparse
+import getpass
 import matplotlib.pyplot as plt
 
 from selenium import webdriver
@@ -67,18 +68,20 @@ if __name__ == '__main__' :
             print("Please ensure to enter correct data formats")
         assert(recovery_factor>0)
         ############################################################################################
-        user_s_bet_amount = input("Please enter the stake amout to use when a pattern is found \n>>>")
+        user_s_bet_amount = input("Please enter the stake amount to use when a pattern is found \n>>>")
         try:
             user_s_bet_amount = int(user_s_bet_amount)
         except:
             print("Please ensure to enter correct data formats")
         assert(user_s_bet_amount>0)
         ######################################### Board type ###################################################
-        board_type = input("Please enter board type \n >>>")
-        assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
+        # board_type = input("Please enter board type \n >>>")
+        # assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
+
+
         if (args.mode == 'live'):
-            username = input("Please enter user name \n>>>")
-            password = input("Please enter password \n>>>")
+            username = input("Please enter user name: \n>>>")
+            password = getpass.getpass("Please enter password: \n>>>")
         else:
             username = None
             password = None
@@ -90,7 +93,7 @@ if __name__ == '__main__' :
         user_s_amount = 50
         user_s_bet_amount = 300
         sleeptime = 1
-        board_type = 'lo'
+        #board_type = 'lo'
     
     ###Error StamentS 
     ERROR1_STATEMENT = "Oh No! Something went wrong \n Try not to interfare with the window: Error 1"
@@ -111,6 +114,9 @@ if __name__ == '__main__' :
     test_data_dict = {'first_dice':[6,4,5,1,3,6,6,5,5,1],
                 'second_dice': [5,4,4,6,2,4,4,2,3,2],
                 'board_type':['hi','mid','hi','mid','lo','hi','hi','mid','mid','lo']}
+    board_order = ['mid','hi', 'lo']
+    board_index = 0
+    board_type  = board_order[board_index]
 
     # Loadin Board Nums
     with open("data.json", "r") as jreader:
@@ -125,7 +131,7 @@ if __name__ == '__main__' :
     if((args.mode == 'demo')| (args.mode == 'test')):
         ### Initialize Diver
         driver = webdriver.Firefox()
-        driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
+        driver.get(DEMO_GAME_URL)
         time.sleep(5)
         driver.set_window_size(1280,947)
         
@@ -189,6 +195,7 @@ if __name__ == '__main__' :
     amt = user_s_amount 
     match = False
     pattern_found = True
+    roll_num_since_sleep = 0
     while(1):
         if (count == countstop):
             df =pd.DataFrame(data_dict)
@@ -197,6 +204,9 @@ if __name__ == '__main__' :
             count = 0
             losses = 0
             match = False
+            roll_num_since_sleep = 0
+            board_index = 0
+            board_type  = board_order[board_index]
             data_dict= {'first_dice':[],
                         'second_dice': [],
                             'board_type':[]}
@@ -235,6 +245,7 @@ if __name__ == '__main__' :
         else:
             ### bet
             print("Roll #{}".format(count + 1))
+            print("The umber of rolls since last Sleep Time: {}".format(roll_num_since_sleep + 1))
             tmp =  hf.getTemplate("rebet")
             game_image = hf.getGameImage(driver, GAME_CANVAS)
             coord  = hf.detectTemplate(game_image, tmp, False, 3)
@@ -478,14 +489,60 @@ if __name__ == '__main__' :
             print("The Number of Total wins: {}".format(wins))
             print("THe Number of bets: {}".format(count))
             #print("Current Stake amount: {}".format(amt))
-            
+            roll_num_since_sleep += 1
             print("Press CTRL + C to close the program")
             if (wins== user_numberofwins):
                 print("I have won: {} times".format(wins))
                 print("Time to take a nap")
+                roll_num_since_sleep = 0
                 total_wins = total_wins + wins
                 wins = 0
+                driver.close()
                 time.sleep(60*sleeptime)
                 print("Time to wake up")
+                ### Initialize Drivers
+                if((args.mode == 'demo')| (args.mode == 'test')):
+                    ### Initialize Diver
+                    driver = webdriver.Firefox()
+                    driver.get(DEMO_GAME_URL)
+                    time.sleep(5)
+                    driver.set_window_size(1280,947)
+                    print(driver.get_window_size())
+
+                    #assert(0)
+                elif((args.mode == 'live')|(args.mode =='live-test')):
+                    ### Initialize Diver            
+                    driver = webdriver.Firefox()
+                    driver.get(logged_in_url)
+                    driver.set_window_size(1280,947)
+                time.sleep(60)
+                # Update Board type
+                board_index += 1
+                if(board_index >2):
+                    board_index = 0
+                board_type = board_order[board_index]
+
+                game_image = hf.getGameImage(driver, GAME_CANVAS)
+                ### Press Continue
+                tmp =  hf.getTemplate("continue")
+                coord  = hf.detectTemplate(game_image, tmp, False, -1)
+                hf.clickScreen(driver,coord[0])
+
+                ### Select Board
+                board_dict = hf.getAllBoardCoord(driver)
+                tmp =  hf.getTemplate(board_type)
+                game_image = hf.getGameImage(driver, GAME_CANVAS)
+                board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
+                #hf.clickScreen(driver,board_coord[0])
+
+                bal = hf.retrieveBalance(driver, game_image)
+                   ### Select Amount
+                
+                hf.setAmountV2(driver,user_s_amount, amount_dict, board_coord[0])
+
+
+                ### Select Amount
+                hf.setAmountV2(driver,user_s_amount, amount_dict, board_coord[0])
+
             print("*****************************************************************")
             print()
