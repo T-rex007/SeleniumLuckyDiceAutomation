@@ -230,9 +230,7 @@ if __name__ == '__main__' :
             hf.clickScreen(driver,coord[0])
             #balance = hf.retrieveAmount(driver)
 
-            ### Select Board
-
-
+            ### Select Board 
             tmp =  hf.getTemplate(board_type)
             game_image = hf.getGameImage(driver, GAME_CANVAS)
             board_coord  = hf.detectTemplate(game_image, tmp, False, -1)
@@ -540,9 +538,7 @@ if __name__ == '__main__' :
                 
                 hf.setAmountV2(driver,user_s_amount, amount_dict, board_coord[0])
 
-
                 ### Select Amount
                 hf.setAmountV2(driver,user_s_amount, amount_dict, board_coord[0])
-
             print("*****************************************************************")
             print()

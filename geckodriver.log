@@ -7952,3 +7952,43 @@ Exiting due to channel error.
 Exiting due to channel error.
 [GFX1-]: Receive IPC close with reason=AbnormalShutdown
 Exiting due to channel error.
+1621928129216	geckodriver	INFO	Listening on 127.0.0.1:41679
+1621928130139	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileHzB2oX"
+1621928136592	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1621928144097	Marionette	INFO	Listening on port 43615
+1621928144421	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+1621928224124	Marionette	INFO	Stopped listening on port 43615
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1621928285130	geckodriver	INFO	Listening on 127.0.0.1:47083
+1621928286135	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileNuaYm3"
+1621928288027	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1621928292371	Marionette	INFO	Listening on port 34191
+1621928292489	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+JavaScript warning: https://logigames.bet9ja.com/swf/18000/libs/three.min.js?v=1.0.0, line 13: WebGL warning: texImage: Alpha-premult and y-flip are deprecated for non-DOM-Element uploads.
+1621928412962	Marionette	INFO	Stopped listening on port 34191
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1621928473972	geckodriver	INFO	Listening on 127.0.0.1:55661
+1621928474979	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileaLxLAF"
+1621928476810	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+Exiting due to channel error.
+Exiting due to channel error.
