@@ -77,15 +77,18 @@ if __name__ == '__main__' :
         ######################################### Board type ###################################################
         # board_type = input("Please enter board type \n >>>")
         # assert((board_type== 'hi')| (board_type =='mid')|(board_type=='lo'))
-
+        
+        ### Change this value to change user Name 
+        username = "Donbull001"
 
         if (args.mode == 'live'):
-            username = input("Please enter user name: \n>>>")
+            ### Uncomment if you want to take user name as input
+            # username = input("Please enter user name: \n>>>")
             password = getpass.getpass("Please enter password: \n>>>")
         else:
-            username = None
+            ### Uncomment if you want to take user name as input
+            # username = None
             password = None
-        
     else:
         ### Testing mode Developer specified test cases
         recovery_factor = 2
@@ -111,9 +114,9 @@ if __name__ == '__main__' :
     amount_dict = {'amt_region':(1098, 478), '50': (915, 484), '250':(800, 485), 
                 '1k':(676, 485), '5k':(553, 485), '25k':(434, 484), 
                 '250k': (309, 484), '1m': (184, 484)}
-    test_data_dict = {'first_dice':[6,4,5,1,3,6,6,5,5,1],
-                'second_dice': [5,4,4,6,2,4,4,2,3,2],
-                'board_type':['hi','mid','hi','mid','lo','hi','hi','mid','mid','lo']}
+    test_data_dict = {'first_dice':[6,6,2,3,6,3,6,3,3,4,],
+                'second_dice': [4,5,5,1,4,2,5,2,6,1],
+                'board_type':['hi','hi','mid','lo','hi','lo','hi','lo','hi','lo']}
     board_order = ['mid','hi', 'lo']
     board_index = 0
     board_type  = board_order[board_index]
@@ -243,7 +246,7 @@ if __name__ == '__main__' :
         else:
             ### bet
             print("Roll #{}".format(count + 1))
-            print("The umber of rolls since last Sleep Time: {}".format(roll_num_since_sleep + 1))
+            print("The Number of rolls since last Sleep Time: {}".format(roll_num_since_sleep + 1))
             tmp =  hf.getTemplate("rebet")
             game_image = hf.getGameImage(driver, GAME_CANVAS)
             coord  = hf.detectTemplate(game_image, tmp, False, 3)
@@ -285,12 +288,18 @@ if __name__ == '__main__' :
             #sys.exit()
             print("Balance: ",bal)
             count = count + 1 
-            if(count==5):
+            if(count==2):
                 print("Cross referencing patterns")
-                match, pattern = hf.CheckPattern(data_dict)
+
+                ### Searching for patterns
+                match_dict =hf.searchPatterns(data_dict)
+                match, pattern_start = match_dict["check"]
+                pattern = match_dict["patterns"]
+                
                 if(match == True):
                     print("A Pattern was found!")
                     amt = user_s_bet_amount
+                    pattern_count = pattern_start
                     match = True
                 elif(match == False):
                     match = False
@@ -313,8 +322,8 @@ if __name__ == '__main__' :
                             sys.exit()
                         ### Set the next pattern
                         tmp = pattern['board_type']
-
-                        tmp = tmp[count]
+                        pattern_count +=1
+                        tmp = tmp[pattern_count]
                         print("count: ", count )
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
@@ -340,8 +349,9 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
+                        pattern_count +=1
                         tmp = pattern['board_type']
-                        tmp = tmp[count]
+                        tmp = tmp[pattern_count]
                         print("count: ", count )
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
@@ -374,15 +384,15 @@ if __name__ == '__main__' :
                             sys.exit()
                         ### Set the next pattern
                         tmp = pattern['board_type']
-
-                        tmp = tmp[count]
+                        pattern_count += 1
+                        tmp = tmp[pattern_count]
                         print("count: ", count )
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
-                        hf.clickScreen(driver,coord)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
+                        hf.clickScreen(driver, coord)
+                        hf.setAmountV2(driver, amt, amount_dict, board_from_pattern[0])
                     else:
                         amt = user_s_amount
                         if(amt>bal):
@@ -400,15 +410,16 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
+                        pattern_count += 1
                         tmp = pattern['board_type']
-                        tmp = tmp[count]
+                        tmp = tmp[pattern_count]
                         print("count: ", count )
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
                         time.sleep(5)
                         coord = (double_beting_coodinates["{}".format(dice_sum)][0], double_beting_coodinates["{}".format(dice_sum)][1])
-                        hf.clickScreen(driver,coord)
-                        hf.setAmountV2(driver,amt, amount_dict, board_from_pattern[0])
+                        hf.clickScreen(driver, coord)
+                        hf.setAmountV2(driver, amt, amount_dict, board_from_pattern[0])
                     else:   
                         print("Loss!")
                         print("Apply recovery Factor")
@@ -433,9 +444,10 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
+                        pattern_count += 1
                         tmp = pattern['board_type']
 
-                        tmp = tmp[count]
+                        tmp = tmp[pattern_count]
                         print("count: ", count )
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               
@@ -460,8 +472,9 @@ if __name__ == '__main__' :
                             print('Stake Amount has Exceeded your current balance Exiting now')
                             sys.exit()
                         ### Set the next pattern
+                        pattern_count += 1
                         tmp = pattern['board_type']
-                        tmp = tmp[count]
+                        tmp = tmp[pattern_count]
                         print("count: ", count )
                         print("Playing Board: ",tmp)
                         board_from_pattern = board_dict[tmp]               

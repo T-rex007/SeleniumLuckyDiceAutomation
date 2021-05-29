@@ -290,3 +290,65 @@ def getDiceNum(driver):
     num1 = decodeString(str1.split('\n')[0])
     num2 = decodeString(str2.split('\n')[0])
     return (num1, num2)
+
+def slidingWindowPatternCheck(pattern, window,stride = 1): 
+    """
+    Returns whether a pattern match of the pattern in tthe input window 
+    in the data.
+    """
+    assert(isinstance(pattern, list)), "The type given: {}".format(type(pattern))
+    assert(isinstance(window, list)), "The type given: {}".format(type(window))
+    n = len(pattern)
+    num_slides = int((n-len(window))/stride)
+    for i in range(0,num_slides, stride):
+        if(window == pattern[i:i +len(window)]):
+            return (True, i + len(window))  
+    return (False, -1)
+
+def searchPatterns(data_dict,window_size = 5):
+    """
+    Returns a dictionary of the format
+    dict ={ "check": (Boolean that describes whether or not a pattern is found, the index of the pattern where the pattern ends)
+            "pattern": A pandas dataframe containing the pattern found.
+    } 
+    Args: 
+        data_dict: A Dictionary containing the pattern being collected
+        window_size: The size of the pattern window   
+    """
+
+    #print(slidingWindowPatternCheck(pattern,window))
+
+    file_names = os.listdir("Data")
+    for i in tqdm(range(len(file_names))):
+        file_name = "Data/{}".format(file_names[i])
+        df = pd.read_csv(file_name)
+        first_dice = list(df[df.columns[1]])
+        second_dice = list(df[df.columns[2]])
+        boards = list(df[df.columns[3]])
+        dice_sum = list(np.array(first_dice) + np.array(second_dice))
+
+        current_dice_sum = list(np.array(data_dict['first_dice'][-window_size:]) + np.array(data_dict['second_dice'][-window_size:]))
+
+        first_dice_check = slidingWindowPatternCheck(first_dice, data_dict['first_dice'][-window_size:])
+        second_dice_check = slidingWindowPatternCheck(second_dice, data_dict['second_dice'][-window_size:])
+        dice_sum_check  = slidingWindowPatternCheck(dice_sum, current_dice_sum)
+        boards_check  = slidingWindowPatternCheck(boards, data_dict['board_type'][-window_size:])
+
+        if((first_dice_check[0] and second_dice_check[0]) and (first_dice_check[1] == second_dice_check[1])  ):
+            print("Pattern Found!")
+            print("Pattern Type: Exact Sequential Match")
+            print("File name of the pattern found: ",file_name)
+            return {"check": second_dice_check, "patterns": df}
+
+        elif(dice_sum_check[0]):
+            print("Pattern Found!")
+            print("Pattern Type: The sum of the two dices")
+            print("File name of the pattern found: ",file_name)
+            return {"check": boards_check, "patterns": df}
+
+        elif(boards_check[0]):
+            print("Pattern Found!")
+            print("Pattern Type: Board Match")
+            print("File name of the pattern found: ",file_name)
+            return {"check": boards_check, "patterns": df}
+    return {"check": (False, -1), "patterns": None}
