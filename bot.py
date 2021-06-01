@@ -195,6 +195,7 @@ if __name__ == '__main__' :
     countstop = 100
     total_wins = 0
     wins = 0
+    pattern_check_start = 0
     amt = user_s_amount 
     match = False
     pattern_found = True
@@ -288,11 +289,12 @@ if __name__ == '__main__' :
             #sys.exit()
             print("Balance: ",bal)
             count = count + 1 
-            if(count==2):
+            if(count>=5):
                 print("Cross referencing patterns")
 
                 ### Searching for patterns
-                match_dict =hf.searchPatterns(data_dict)
+                match_dict =hf.searchPatterns(data_dict = data_dict, start = pattern_check_start)
+                pattern_check_start = count
                 match, pattern_start = match_dict["check"]
                 pattern = match_dict["patterns"]
                 
