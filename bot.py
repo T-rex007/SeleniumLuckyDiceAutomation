@@ -254,7 +254,7 @@ if __name__ == '__main__' :
             hf.clickScreen(driver,(coord[0][0] + 50, coord[0][1] + 50) )
             time.sleep(10)
             print("Current Stake amount: {}".format(amt))
-            time.sleep(10)
+            time.sleep(20)
             ### Read dice Value
             tmp1,tmp2 = hf.getDiceNum(driver)
             time.sleep(5)
