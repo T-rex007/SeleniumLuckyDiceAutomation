@@ -252,7 +252,7 @@ if __name__ == '__main__' :
             game_image = hf.getGameImage(driver, GAME_CANVAS)
             coord  = hf.detectTemplate(game_image, tmp, False, 3)
             hf.clickScreen(driver,(coord[0][0] + 50, coord[0][1] + 50) )
-            time.sleep(10)
+            time.sleep(20)
             print("Current Stake amount: {}".format(amt))
             time.sleep(20)
             ### Read dice Value
@@ -555,5 +555,6 @@ if __name__ == '__main__' :
 
                 ### Select Amount
                 hf.setAmountV2(driver,user_s_amount, amount_dict, board_coord[0])
+                driver.set_window_size(1280,947)
             print("*****************************************************************")
             print()
