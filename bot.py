@@ -133,7 +133,7 @@ if __name__ == '__main__' :
     ### Initialize Driver
     if((args.mode == 'demo')| (args.mode == 'test')):
         ### Initialize Diver
-        driver = webdriver.Firefox()
+        driver = webdriver.Chrome()
         driver.get(DEMO_GAME_URL)
         time.sleep(5)
         driver.set_window_size(1280,947)
@@ -142,7 +142,7 @@ if __name__ == '__main__' :
         #assert(0)
     elif((args.mode == 'live')|(args.mode =='live-test')):
         ### Initialize Diver
-        driver_login = webdriver.Firefox()
+        driver_login = webdriver.Chrome()
         driver_login.get("https://casino.bet9ja.com/casino/category/all")
         ### Enter credentials
         username_element = driver_login.find_element_by_name("username")
@@ -152,7 +152,7 @@ if __name__ == '__main__' :
         password_element.send_keys(password, Keys.RETURN)
 
         logged_in_url = input("Please enter live url \n >>>")
-        driver = webdriver.Firefox()
+        driver = webdriver.Chrome()
         driver.get(logged_in_url)
         driver.set_window_size(1280,947)
 
@@ -221,7 +221,7 @@ if __name__ == '__main__' :
             
             ### Initialize Driver
             print("Reinitializing driver")
-            driver = webdriver.Firefox()
+            driver = webdriver.Chrome()
             driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
             driver.set_window_size(1280,947)
             time.sleep(30)
@@ -516,7 +516,7 @@ if __name__ == '__main__' :
                 ### Initialize Drivers
                 if((args.mode == 'demo')| (args.mode == 'test')):
                     ### Initialize Diver
-                    driver = webdriver.Firefox()
+                    driver = webdriver.Chrome()
                     driver.get(DEMO_GAME_URL)
                     time.sleep(5)
                     driver.set_window_size(1280,947)
@@ -525,7 +525,7 @@ if __name__ == '__main__' :
                     #assert(0)
                 elif((args.mode == 'live')|(args.mode =='live-test')):
                     ### Initialize Diver            
-                    driver = webdriver.Firefox()
+                    driver = webdriver.Chrome()
                     driver.get(logged_in_url)
                     driver.set_window_size(1280,947)
                 time.sleep(60)
