@@ -14,6 +14,7 @@ import pytesseract
 import os
 import pandas as pd
 
+from datetime import datetime
 from tqdm import tqdm
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -62,6 +63,7 @@ def detectTemplate(image, template, visualize = False, method_num = -1):
         ### Visualize the Detection?
         if(visualize == True):
             cv2.rectangle(img,top_left, bottom_right, 255,20)
+            plt.imsave("debug/debugImage{}.jpg".format(str(datetime.now().strftime("%Y-%m-%d-%H-%M-%S"))), img)
             plt.subplot(121),plt.imshow(res,cmap = 'gray')
             plt.title('Matching Result'), plt.xticks([]), plt.yticks([])
             plt.subplot(122),plt.imshow(img,cmap = 'gray')
@@ -253,7 +255,7 @@ def getAllBoardCoord(driver):
 
 def optimizeAmtClick(amt):
     """
-    Returns a optimized list of the amounts to click in the game to minimize 
+    Returns a optimized list of the amounts to click in the game to minimize time taken
     """
     
     amt_val_lst  = [50,250,1000, 5000,25000,250000,1000000]
@@ -276,6 +278,8 @@ def getDiceNum(driver):
     r2  = (1160, 189, 86, 33)
     imCrop1 = game_image[int(r1[1]):int(r1[1]+r1[3]), int(r1[0]):int(r1[0]+r1[2])]
     imCrop2 = game_image[int(r2[1]):int(r2[1]+r2[3]), int(r2[0]):int(r2[0]+r2[2])]
+    plt.imsave("imbcrop1_1.jpg",imcrop1)
+    plt.imsave("imbcrop1_2.jpg",imcrop2)
     ### Preprocess Image
     thresh_image1 = thresholding(imCrop1)
     thresh_image2 = thresholding(imCrop2)
@@ -335,3 +339,14 @@ def searchPatterns(data_dict,start,window_size = 5):
     
     print("No Pattern found")
     return {"check":(False,-1), "patterns": df}
+
+
+def rescaleCoord(r, driver):
+    tmp = driver.get_window_size()
+    game_image = getGameImage(driver, "layer2")
+    Ty, Tx = game_image.shape
+    Oy, Ox = tmp["height"], tmp["width"]
+    if(len(r) == 4):
+        return( int((r[0]/Ox)*Tx), int((r[1]/Oy)*Ty), int((r[2]/Ox)*Tx), int((r[3]/Oy)*Ty))
+    else:
+        return( int((r[0]/Ox)*Tx), int((r[1]/Oy)*Ty)) 

@@ -133,7 +133,7 @@ if __name__ == '__main__' :
     ### Initialize Driver
     if((args.mode == 'demo')| (args.mode == 'test')):
         ### Initialize Diver
-        driver = webdriver.Chrome()
+        driver = webdriver.Firefox()
         driver.get(DEMO_GAME_URL)
         time.sleep(5)
         driver.set_window_size(1280,947)
@@ -142,7 +142,7 @@ if __name__ == '__main__' :
         #assert(0)
     elif((args.mode == 'live')|(args.mode =='live-test')):
         ### Initialize Diver
-        driver_login = webdriver.Chrome()
+        driver_login = webdriver.Firefox()
         driver_login.get("https://casino.bet9ja.com/casino/category/all")
         ### Enter credentials
         username_element = driver_login.find_element_by_name("username")
@@ -152,7 +152,7 @@ if __name__ == '__main__' :
         password_element.send_keys(password, Keys.RETURN)
 
         logged_in_url = input("Please enter live url \n >>>")
-        driver = webdriver.Chrome()
+        driver = webdriver.Firefox()
         driver.get(logged_in_url)
         driver.set_window_size(1280,947)
 
@@ -168,12 +168,14 @@ if __name__ == '__main__' :
     
     game_image = hf.getGameImage(driver, GAME_CANVAS)
 
-    ### Press Continue
-    tmp =  hf.getTemplate("continue")
+    ### Press contine1
+    tmp =  hf.getTemplate("continue1")
 
-    coord  = hf.detectTemplate(game_image, tmp, False, -1)
-    hf.clickScreen(driver,coord[0])
-
+    coord  = hf.detectTemplate(game_image, tmp, True, -1)
+    coord = hf.rescaleCoord(coord[0], driver)
+    # hf.clickScreen(driver,coord)
+    print("Clicked")
+    # sys.exit()
     ### Select Board
     board_dict = hf.getAllBoardCoord(driver)
     tmp =  hf.getTemplate(board_type)
@@ -221,16 +223,17 @@ if __name__ == '__main__' :
             
             ### Initialize Driver
             print("Reinitializing driver")
-            driver = webdriver.Chrome()
+            driver = webdriver.Firefox()
             driver.get("https://logigames.bet9ja.com/games.ls?page=launch&gameid=18000&skin=12&sid=&pff=1&tmp=1611946195")
             driver.set_window_size(1280,947)
             time.sleep(30)
             GAME_CANVAS = "layer2"
 
-            ### Press Continue
-            tmp =  hf.getTemplate("continue")
+            ### Press contine1
+            print("Clicking contine1!")
+            tmp =  hf.getTemplate("contine1")
             game_image = hf.getGameImage(driver, GAME_CANVAS)
-            coord  = hf.detectTemplate(game_image, tmp, False, -1)
+            coord  = hf.detectTemplate(game_image, tmp, True, -1)
             hf.clickScreen(driver,coord[0])
             #balance = hf.retrieveAmount(driver)
 
@@ -250,7 +253,9 @@ if __name__ == '__main__' :
             print("The Number of rolls since last Sleep Time: {}".format(roll_num_since_sleep + 1))
             tmp =  hf.getTemplate("rebet")
             game_image = hf.getGameImage(driver, GAME_CANVAS)
-            coord  = hf.detectTemplate(game_image, tmp, False, 3)
+            coord  = hf.detectTemplate(game_image, tmp, True, 3)
+            print("shape of Image", game_image.shape)
+            print("GetDriver Size",driver.get_window_size())
             hf.clickScreen(driver,(coord[0][0] + 50, coord[0][1] + 50) )
             time.sleep(20)
             print("Current Stake amount: {}".format(amt))
@@ -516,7 +521,7 @@ if __name__ == '__main__' :
                 ### Initialize Drivers
                 if((args.mode == 'demo')| (args.mode == 'test')):
                     ### Initialize Diver
-                    driver = webdriver.Chrome()
+                    driver = webdriver.Firefox()
                     driver.get(DEMO_GAME_URL)
                     time.sleep(5)
                     driver.set_window_size(1280,947)
@@ -525,7 +530,7 @@ if __name__ == '__main__' :
                     #assert(0)
                 elif((args.mode == 'live')|(args.mode =='live-test')):
                     ### Initialize Diver            
-                    driver = webdriver.Chrome()
+                    driver = webdriver.Firefox()
                     driver.get(logged_in_url)
                     driver.set_window_size(1280,947)
                 time.sleep(60)
@@ -536,8 +541,8 @@ if __name__ == '__main__' :
                 board_type = board_order[board_index]
 
                 game_image = hf.getGameImage(driver, GAME_CANVAS)
-                ### Press Continue
-                tmp =  hf.getTemplate("continue")
+                ### Press contine1
+                tmp =  hf.getTemplate("contine1")
                 coord  = hf.detectTemplate(game_image, tmp, False, -1)
                 hf.clickScreen(driver,coord[0])
 
